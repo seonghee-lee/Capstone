@@ -19,5 +19,6 @@ Smart autonomous moving air purifier
 - 2021.03.08: 2차 발표 설계서, 프로젝트 수행 보고서 제출
 
 # Reference
-TURTLEBOT3 Github: https://github.com/ROBOTIS-GIT/turtlebot3
-TURTLEBOT3 e-manual: https://emanual.robotis.com/docs/en/platform/turtlebot3
+
+- TURTLEBOT3 Github: https://github.com/ROBOTIS-GIT/turtlebot3
+- TURTLEBOT3 e-manual: https://emanual.robotis.com/docs/en/platform/turtlebot3
