@@ -14,7 +14,10 @@ Smart autonomous moving air purifier
 - 2020.12.26: 회의
 - 2021.01.04 ~ 2021.01.06: 발표 전 점검
 - 2021.01.07: 종합설계 1차 제안서 발표
-- 2021.01.28: 1차 매핑, 네비게이션 실행
+- 2021.01.28: 1차 매핑 & 네비게이션 실행
+- 2021.02.05: 트랙 설치, 2차 매핑 & 네비게이션 실행
+- 2021.03.08: 2차 발표 설계서, 프로젝트 수행 보고서 제출
 
 # Reference
 TURTLEBOT3 Github: https://github.com/ROBOTIS-GIT/turtlebot3
+TURTLEBOT3 e-manual: https://emanual.robotis.com/docs/en/platform/turtlebot3
