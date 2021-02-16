@@ -11,6 +11,8 @@ project(turtlebot3_navigation)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  actionlib
+  #actionlib_msgs
 )
 
 ################################################################################
@@ -20,7 +22,9 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 # Declare ROS messages, services and actions
 ################################################################################
-
+#add_action_files(
+#  DIRECTORY action
+#)
 ################################################################################
 # Declare ROS dynamic reconfigure parameters
 ################################################################################
@@ -29,7 +33,11 @@ find_package(catkin REQUIRED COMPONENTS
 # Declare catkin specific configuration to be passed to dependent projects
 ################################################################################
 catkin_package(
-  CATKIN_DEPENDS roscpp std_msgs
+  CATKIN_DEPENDS 
+    roscpp
+    std_msgs
+    actionlib
+#  actionlib_msgs
 )
 
 ################################################################################
@@ -38,8 +46,22 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
 add_executable(test_navigation_node scripts/test_navigation.cpp)
-target_link_libraries(test_navigation_node ${catkin_LIBRARIES})
+
+target_link_libraries(
+  test_navigation_node 
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(
+  test_navigation_node 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
+)
+
+#generate_messages(
+#  DEPENDENCIES actionlib_msgs std_msgs
+#)
 #set_target_properties(map_navigation_node PROPERTIES LINKER_LANGUAGE CXX)
 
 
