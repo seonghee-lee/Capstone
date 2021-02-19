@@ -7,14 +7,14 @@ bool moveToGoal(double xGoal, double yGoal);
 char choose();
 
 /** declare the coordinates of interest **/
-double xspot0=0.409321165513;
-double yspot0=0.807000009102;
-double xspot1=0.423739669195;
-double yspot1=0.0138367868571;
-double xspot2=0.0681377527852;
-double yspot2=0.468984252043;
-double xspot3=0.05678169183;
-double yspot3=-0.550405495116;
+double xspot0=0.08471;
+double yspot0=-0.47712;
+double xspot1=0.118257;
+double yspot1=0.47154422;
+double xspot2=0.45796;
+double yspot2=-0.07302;
+double xspot3=0.38;
+double yspot3=0.80;
 
 bool goalReached=false;
 

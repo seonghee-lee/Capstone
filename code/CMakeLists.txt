@@ -12,7 +12,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   actionlib
-  #actionlib_msgs
+  actionlib_msgs
+  nav_msgs
+  message_generation
+  move_base_msgs
 )
 
 ################################################################################
@@ -25,6 +28,13 @@ find_package(catkin REQUIRED COMPONENTS
 #add_action_files(
 #  DIRECTORY action
 #)
+
+generate_messages(
+  DEPENDENCIES
+    std_msgs
+    actionlib_msgs
+    move_base_msgs
+)
 ################################################################################
 # Declare ROS dynamic reconfigure parameters
 ################################################################################
@@ -37,7 +47,9 @@ catkin_package(
     roscpp
     std_msgs
     actionlib
-#  actionlib_msgs
+    actionlib_msgs
+    nav_msgs
+    move_base_msgs
 )
 
 ################################################################################
@@ -59,9 +71,6 @@ add_dependencies(
   ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
 )
 
-#generate_messages(
-#  DEPENDENCIES actionlib_msgs std_msgs
-#)
 #set_target_properties(map_navigation_node PROPERTIES LINKER_LANGUAGE CXX)
 
 
