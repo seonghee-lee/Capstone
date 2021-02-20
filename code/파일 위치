@@ -1,7 +1,0 @@
-[파일 위치]
-test_navigation.launch : 각자 workspace/src/turtlebot3/turtlebot3_navigation/launch
-test_navigation.cpp : 각자 workspace/src/turtlebot3/turtlebot3_navigation/scripts
-CMakeLists.txt : 각자 workspace/src/turtlebot3/turtlebot3_navigation
-package.xml : 각자 workspace/src/turtlebot3/turtlebot3_navigation
-costmap_common_params_burger.yaml : 각자 workspace/src/turtlebot3/turtlebot3_navigation/param
-map.pgm, map.yaml : 각자 home 디렉토리

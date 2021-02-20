@@ -7,7 +7,13 @@ project(turtlebot3_navigation)
 ################################################################################
 # Find catkin packages and libraries for catkin and system dependencies
 ################################################################################
-find_package(catkin REQUIRED)
+#새로 추가
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  std_msgs
+  actionlib
+  #actionlib_msgs
+)
 
 ################################################################################
 # Setup for python modules and scripts
@@ -16,7 +22,9 @@ find_package(catkin REQUIRED)
 ################################################################################
 # Declare ROS messages, services and actions
 ################################################################################
-
+#add_action_files(
+#  DIRECTORY action
+#)
 ################################################################################
 # Declare ROS dynamic reconfigure parameters
 ################################################################################
@@ -24,11 +32,38 @@ find_package(catkin REQUIRED)
 ################################################################################
 # Declare catkin specific configuration to be passed to dependent projects
 ################################################################################
-catkin_package()
+catkin_package(
+  CATKIN_DEPENDS 
+    roscpp
+    std_msgs
+    actionlib
+#  actionlib_msgs
+)
 
 ################################################################################
 # Build
 ################################################################################
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
+add_executable(test_navigation_node scripts/test_navigation.cpp)
+
+target_link_libraries(
+  test_navigation_node 
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(
+  test_navigation_node 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
+)
+
+#generate_messages(
+#  DEPENDENCIES actionlib_msgs std_msgs
+#)
+#set_target_properties(map_navigation_node PROPERTIES LINKER_LANGUAGE CXX)
+
 
 ################################################################################
 # Install
@@ -36,6 +71,7 @@ catkin_package()
 install(DIRECTORY launch maps param rviz
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
 
 ################################################################################
 # Test
