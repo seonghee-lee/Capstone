@@ -19,6 +19,10 @@ Smart autonomous moving air purifier
 - 2021.02.17: 지정된 구역으로 이동하는 노드 작성 후 구현
 - 2021.03.08: 2차 발표 설계서, 프로젝트 수행 보고서 제출
 
+# Hardware
+![HW](https://user-images.githubusercontent.com/74324866/112432150-cfb65f80-8d83-11eb-83c8-93d56ab1d572.png)
+
+
 # Reference
 
 - TURTLEBOT3 Github: https://github.com/ROBOTIS-GIT/turtlebot3
