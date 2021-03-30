@@ -87,6 +87,28 @@ add_dependencies(
   test_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
 )
+
+##
+add_executable(topic_subscriber1 scripts/subscriber1.cpp)
+target_link_libraries(
+  topic_subscriber1
+  ${catkin_LIBRARIES}
+)
+add_dependencies(
+  topic_subscriber1
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
+)
+
+add_executable(topic_subscriber2 scripts/subscriber2.cpp)
+target_link_libraries(
+  topic_subscriber2
+  ${catkin_LIBRARIES}
+)
+add_dependencies(
+  topic_subscriber2
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
+)
+
 ################################################################################
 # Install
 ################################################################################

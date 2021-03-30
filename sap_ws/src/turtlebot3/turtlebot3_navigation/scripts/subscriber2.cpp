@@ -1,9 +1,10 @@
 #include "ros/ros.h" // ROS 기본 헤더파일
 #include "turtlebot3_navigation/Msgfile.h" // Msgfile 메시지 파일 헤더 (빌드 후 자동 생성됨)
+int choice=0;
 
-void msgCallback(const ros_tutorials_topic::MsgTutorial::ConstPtr& msg)
+void msgCallback(const turtlebot3_navigation::Msgfile::ConstPtr& msg)
 {
-	extern char choice=msg->menu;
+	choice=msg->menu;
         ROS_INFO("recieve msg = %d", msg->menu); // menu 메시지를 표시한다
         
 }
@@ -16,9 +17,9 @@ int main(int argc, char **argv) //노드 메인 함수
 	// 서브스크라이버 선언, ros_tutorials_topic 패키지의 MsgTutorial 메시지 파일을 이용한
 	// 서브스크라이버 ros_tutorial_sub 를 작성한다. 토픽명은 "ros_tutorial_msg" 이며,
 	// 서브스크라이버 큐(queue) 사이즈를 100개로 설정한다는 것이다
-	ros::Subscriber ros_tutorial_sub = nh.subscribe("ros_tutorial_msg", 100, msgCallback);
+	ros::Subscriber ros_tutorial_sub = nh.subscribe("topic", 100, msgCallback);
         
-        if(choice=='2'){
+        if(choice==2){
             ROS_INFO("MENU2 실행");
         }
         else{
