@@ -31,7 +31,6 @@ find_package(catkin REQUIRED COMPONENTS
 
 #add_message_files(FILES 파일명.msg)
 
-add_message_files(FILES Msgfile.msg)
 
 generate_messages(
   DEPENDENCIES
@@ -77,37 +76,8 @@ add_dependencies(
 
 #set_target_properties(map_navigation_node PROPERTIES LINKER_LANGUAGE CXX)
 
-##여기다가 퍼블리셔 빌드 옵션 추가해주기
-add_executable(test_node scripts/test1.cpp)
-target_link_libraries(
-  test_node
-  ${catkin_LIBRARIES}
-)
-add_dependencies(
-  test_node
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
-)
 
-##
-add_executable(topic_subscriber1 scripts/subscriber1.cpp)
-target_link_libraries(
-  topic_subscriber1
-  ${catkin_LIBRARIES}
-)
-add_dependencies(
-  topic_subscriber1
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
-)
 
-add_executable(topic_subscriber2 scripts/subscriber2.cpp)
-target_link_libraries(
-  topic_subscriber2
-  ${catkin_LIBRARIES}
-)
-add_dependencies(
-  topic_subscriber2
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
-)
 
 ################################################################################
 # Install
