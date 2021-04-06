@@ -80,7 +80,7 @@ void Dbcon::dataToDb() {
     
     // test: data 값 우선 0으로 통일
     //mysql_query(connection, "INSERT INTO test_table VALUES" "('%d','%d',%s)",spot, pmsdata, NOW());
-    mysql_query(connection, "INSERT INTO test_table VALUES (spot, pmsdata, date) = (1,55,NOW());
+    mysql_query(connection, "INSERT INTO test_table (spot, pmsdata, date) VALUES (1,55,NOW());
 }
 
 int main(int argc, char *argv[]) {
