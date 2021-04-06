@@ -21,6 +21,7 @@ private:
 public:
   MultiNavigation_t(ros::NodeHandle nh);
   ~MultiNavigation_t();
+  void msgCallback(const navi_test::TopicMsg::ConstPtr& msg);
   void setSpot(SpotInfo* arr_p, SpotInfo* current);
   bool moveToGoal(double xGoal, double yGoal);
   void testValue(SpotInfo* arr_p);
@@ -33,10 +34,15 @@ MultiNavigation_t::MultiNavigation_t(ros::NodeHandle nh){
   SpotInfo *current_p=spot;
   setSpot(p, current_p);
   testValue(p);
+  sub=nh.subscribe("pmsdata", 10, &Navi::msgCallback,this);
 }
 
 //Destructor
 MultiNavigation_t::~MultiNavigation_t(){}
+
+void Navi::msgCallback(const navi_test::TopicMsg::ConstPtr& msg){
+  ROS_INFO("Recieved data : %d ", msg->pmsdata);
+}
 
 void MultiNavigation_t::setSpot(SpotInfo* arr_p, SpotInfo* current){
   //initialize spots' status
