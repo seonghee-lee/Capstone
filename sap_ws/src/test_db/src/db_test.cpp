@@ -40,7 +40,7 @@ void Dbcon::msgCallback(const cpp_python::TopicMsg::ConstPtr& msg){
 void Dbcon::dataToDb() {
     // connect to db
     connection = mysql_init(connection);
-    mysql_real_connect(connection, "ip", "yunjihui", "yooni2418", "testdb", 0, NULL, 0);
+    mysql_real_connect(connection, "ip", "username", "password", "testdb", 0, NULL, 0);
     
     
     if(mysql_query(connection, "SELECT * FROM test_table")){
