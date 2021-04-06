@@ -15,7 +15,7 @@ struct SpotInfo{
 class MultiNavigation_t{
 private:
   ros::NodeHandle n;
-  //ros::Subscriber sub;
+  ros::Subscriber sub;
   bool goalReached;
 
 public:
