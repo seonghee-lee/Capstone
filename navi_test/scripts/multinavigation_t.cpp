@@ -2,6 +2,7 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 #include <iostream>
+#include "navi_test/TopicMsg.h"
 
 using namespace std;
 
@@ -34,13 +35,13 @@ MultiNavigation_t::MultiNavigation_t(ros::NodeHandle nh){
   SpotInfo *current_p=spot;
   setSpot(p, current_p);
   testValue(p);
-  sub=nh.subscribe("pmsdata", 10, &Navi::msgCallback,this);
+  sub=nh.subscribe("pmsdata", 10, &MultiNavigation_t::msgCallback,this);
 }
 
 //Destructor
 MultiNavigation_t::~MultiNavigation_t(){}
 
-void Navi::msgCallback(const navi_test::TopicMsg::ConstPtr& msg){
+void MutiNavigation_t::msgCallback(const navi_test::TopicMsg::ConstPtr& msg){
   ROS_INFO("Recieved data : %d ", msg->pmsdata);
 }
 
