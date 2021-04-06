@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>navi_test</name>
+  <name>sap_mode_two</name>
   <version>1.2.5</version>
   <description>
-    The navi_test provides roslaunch scripts for starting the navigation.
+    The sap_mode_two provides roslaunch scripts for starting the navigation.
   </description>
   <license>Apache 2.0</license>
   <author email="pyo@robotis.com">Pyo</author>

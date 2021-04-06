@@ -2,7 +2,7 @@
 # Set minimum required version of cmake, project name and compile options
 ################################################################################
 cmake_minimum_required(VERSION 2.8.3)
-project(turtlebot3_navigation)
+project(sap_mode_two)
 
 ################################################################################
 # Find catkin packages and libraries for catkin and system dependencies
@@ -30,7 +30,7 @@ find_package(catkin REQUIRED COMPONENTS
 #)
 
 #add_message_files(FILES 파일명.msg)
-add_message_files(FILES TopicMsg.msg)
+add_message_files(FILES Msg.msg)
 
 generate_messages(
   DEPENDENCIES
@@ -62,21 +62,21 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 ##test_navigation 노드에 대한 빌드 옵
-#add_executable(test_navigation_node scripts/test_navigation.cpp)
+#add_executable(mode2_node src/mode_two.cpp)
 
 #target_link_libraries(
-#  test_navigation_node 
+#  mode2_node 
 #  ${catkin_LIBRARIES}
 #)
 
 #add_dependencies(
-#  test_navigation_node 
+#  mode2_node 
 #  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
 #)
 
-#set_target_properties(map_navigation_node PROPERTIES LINKER_LANGUAGE CXX)
+#set_target_properties(mode2_node PROPERTIES LINKER_LANGUAGE CXX)
 ##실험 노드에 대한 빌드 옵션
-add_executable(node scripts/multinavigation_t.cpp)
+add_executable(node src/mode_two.cpp)
 
 target_link_libraries(
   node
