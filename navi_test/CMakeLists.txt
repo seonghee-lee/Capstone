@@ -2,7 +2,7 @@
 # Set minimum required version of cmake, project name and compile options
 ################################################################################
 cmake_minimum_required(VERSION 2.8.3)
-project(navi_test)
+project(turtlebot3_navigation)
 
 ################################################################################
 # Find catkin packages and libraries for catkin and system dependencies
@@ -29,14 +29,8 @@ find_package(catkin REQUIRED COMPONENTS
 #  DIRECTORY action
 #)
 
-
-
-add_message_files(
-   FILES
-   #Msg.msg
-   TopicMsg.msg
-#   Message2.msg
- )
+#add_message_files(FILES 파일명.msg)
+add_message_files(FILES TopicMsg.msg)
 
 generate_messages(
   DEPENDENCIES
@@ -44,9 +38,6 @@ generate_messages(
     actionlib_msgs
     move_base_msgs
 )
-
-
-
 ################################################################################
 # Declare ROS dynamic reconfigure parameters
 ################################################################################
@@ -55,7 +46,6 @@ generate_messages(
 # Declare catkin specific configuration to be passed to dependent projects
 ################################################################################
 catkin_package(
-  LIBRARIES cpp_python
   CATKIN_DEPENDS 
     roscpp
     std_msgs
@@ -63,7 +53,6 @@ catkin_package(
     actionlib_msgs
     nav_msgs
     move_base_msgs
-    message_generation
 )
 
 ################################################################################
@@ -73,20 +62,31 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 ##test_navigation 노드에 대한 빌드 옵
-add_executable(navi_test_node scripts/Navi.cpp)
+add_executable(test_navigation_node scripts/test_navigation.cpp)
 
 target_link_libraries(
-  navi_test_node 
+  test_navigation_node 
   ${catkin_LIBRARIES}
 )
 
 add_dependencies(
-  navi_test_node 
+  test_navigation_node 
   ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
 )
 
 #set_target_properties(map_navigation_node PROPERTIES LINKER_LANGUAGE CXX)
+##실험 노드에 대한 빌드 옵션
+add_executable(node scripts/multinavigation_t.cpp)
 
+target_link_libraries(
+  node
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(
+  node
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
+)
 
 
 
