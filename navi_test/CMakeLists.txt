@@ -62,17 +62,17 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 ##test_navigation 노드에 대한 빌드 옵
-add_executable(test_navigation_node scripts/test_navigation.cpp)
+#add_executable(test_navigation_node scripts/test_navigation.cpp)
 
-target_link_libraries(
-  test_navigation_node 
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(
+#  test_navigation_node 
+#  ${catkin_LIBRARIES}
+#)
 
-add_dependencies(
-  test_navigation_node 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
-)
+#add_dependencies(
+#  test_navigation_node 
+#  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
+#)
 
 #set_target_properties(map_navigation_node PROPERTIES LINKER_LANGUAGE CXX)
 ##실험 노드에 대한 빌드 옵션
