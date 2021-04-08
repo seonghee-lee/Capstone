@@ -2,8 +2,7 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 #include <iostream>
-#include "navi_test/TopicMsg.h"
-
+#include "turtlebot3_navigation/TopicMsg.h"
 using namespace std;
 
 struct SpotInfo{
@@ -22,32 +21,45 @@ private:
 public:
   MultiNavigation_t(ros::NodeHandle nh);
   ~MultiNavigation_t();
-  void msgCallback(const navi_test::TopicMsg::ConstPtr& msg);
+  void msgCallback(const turtlebot3_navigation::TopicMsg::ConstPtr& msg);
   void setSpot(SpotInfo* arr_p, SpotInfo* current);
-  bool moveToGoal(double xGoal, double yGoal);
-  void testValue(SpotInfo* arr_p);
+  bool moveToGoal(double xGoal, double yGoal, int data);
+  void testValue(SpotInfo* arr_p, int sub_data);
+  void exFunction(int a);
+  SpotInfo spot[4];
+  SpotInfo *p, *current_p;
 };
 
 //Constructor
 MultiNavigation_t::MultiNavigation_t(ros::NodeHandle nh){
-  SpotInfo spot[4];
-  SpotInfo *p=spot;
-  SpotInfo *current_p=spot;
+  //SpotInfo spot[4];
+  p=spot;
+  current_p=spot;
   setSpot(p, current_p);
-  testValue(p);
-  sub=nh.subscribe("pmsdata", 10, &MultiNavigation_t::msgCallback,this);
+  //testValue(p);
+  sub=nh.subscribe("pmsdata",10,&MultiNavigation_t::msgCallback,this);
+
 }
 
 //Destructor
 MultiNavigation_t::~MultiNavigation_t(){}
 
-void MutiNavigation_t::msgCallback(const navi_test::TopicMsg::ConstPtr& msg){
-  ROS_INFO("Recieved data : %d ", msg->pmsdata);
+// /////////////////////////////////////////
+void MultiNavigation_t::exFunction(int a){
+  cout<<"exFunction_data : %d "<<a<<endl;
+}
+// /////////////////////////////////////////
+
+void MultiNavigation_t::msgCallback(const turtlebot3_navigation::TopicMsg::ConstPtr &msg){
+  ROS_INFO("Received data: %d ",msg->pmsdata);
+  int buf=msg->pmsdata;
+  //exFunction(buf);
+  testValue(this->p, buf);
 }
 
 void MultiNavigation_t::setSpot(SpotInfo* arr_p, SpotInfo* current){
   //initialize spots' status
-  for(int i=0;i<3;i++){
+  for(int i=0;i<4;i++){
     current->status=0;
     current->dust_data=0;
     current++;
@@ -65,9 +77,15 @@ void MultiNavigation_t::setSpot(SpotInfo* arr_p, SpotInfo* current){
   current++;
   current->x_cordinate=-0.4828;
   current->y_cordinate=-1.5649;
+
+  for(int i=0;i<4;i++){
+    cout<<"spot["<<i<<"].x_cordinate : "<<arr_p->x_cordinate<<endl;
+    cout<<"spot["<<i<<"].y_cordinate : "<<arr_p->y_cordinate<<endl;
+    arr_p++;
+  }
 }
 
-bool MultiNavigation_t::moveToGoal(double xGoal, double yGoal){
+bool MultiNavigation_t::moveToGoal(double xGoal, double yGoal, int data){
   actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("move_base",true);
 
   while(!ac.waitForServer(ros::Duration(5.0))){
@@ -87,27 +105,37 @@ bool MultiNavigation_t::moveToGoal(double xGoal, double yGoal){
   goal.target_pose.pose.orientation.w=1.0;
 
   ROS_INFO("Sending goal location ...");
+
+  cout<<goal.target_pose.pose.position.x<<endl;
+  cout<<goal.target_pose.pose.position.y<<endl;
+
+  cout<<xGoal<<","<<yGoal<<endl;
+
   ac.sendGoal(goal);
 
   ac.waitForResult();
 
   if(ac.getState()==actionlib::SimpleClientGoalState::SUCCEEDED){
     ROS_INFO("You have reached the destination");
+    cout<<"current dust : "<<data;
     return true;
   }
   else{
     ROS_INFO("The robot failed to reach the destination");
+    cout<<"current dust : "<<data;
     return false;
   }
 }
 
-void MultiNavigation_t::testValue(SpotInfo* arr_p){
+void MultiNavigation_t::testValue(SpotInfo* arr_p, int sub_data){
   goalReached=false;
+  int send_data=sub_data;
   double x, y;
   for(int i=0;i<4;i++){
     x=arr_p->x_cordinate;
     y=arr_p->y_cordinate;
-    goalReached=moveToGoal(x, y);
+    cout<<"go to x :"<<x<<", y :"<<y<<endl;
+    goalReached=moveToGoal(x, y, send_data);
     ros::Duration(10).sleep();
     if(goalReached)
       ROS_INFO("Congratulations!");
