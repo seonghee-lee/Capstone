@@ -2,6 +2,7 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 #include <iostream>
+#include "turtlesim/Pose.h"
 #include "sap_mode_two/Msg.h"
 using namespace std;
 
@@ -11,7 +12,7 @@ struct SpotInfo {
 	int status;
 	int dust_data;
 };
-sap_mode_two::Msg current_data;
+turtlesim::Pose current_data;
 
 class Mode_two {
 private:
