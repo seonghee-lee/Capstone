@@ -11,6 +11,7 @@ struct SpotInfo {
 	int status;
 	int dust_data;
 };
+sap_mode_two::Msg current_data;
 
 class Mode_two {
 private:
@@ -31,13 +32,12 @@ public:
 };
 
 //Constructor
-Mode_two::Mode_two(ros::NodeHandle nh) {
+Mode_two::Mode_two(ros::NodeHandle nh):n(nh) {
 	//SpotInfo spot[4];
 	p = spot;
 	current_p = spot;
 	setSpot(p, current_p);
 	//testValue(p);
-	sub = nh.subscribe("pmsdata", 10, &MultiNavigation_t::msgCallback, this);
 	testValue();
 }
 
@@ -45,9 +45,9 @@ Mode_two::Mode_two(ros::NodeHandle nh) {
 Mode_two::~Mode_two() {}
 
 
-void Mode_two::msgCallback(const sap_mode_two::Msg::ConstPtr &msg) {
+void Mode_two::msgCallback(const sap_mode_two::Msg::ConstPtr &msg){
 	ROS_INFO("Received data: ", msg->pmsdata);
-	current_data = msg->pmsdata;
+	current_data = *msg;
 }
 
 void Mode_two::setSpot(SpotInfo* arr_p, SpotInfo* current) {
