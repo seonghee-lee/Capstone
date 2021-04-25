@@ -24,7 +24,6 @@ public:
 	Mode_two(ros::NodeHandle n);
 	~Mode_two();
 	void msgCallback(const sap_mode_two::Msg::ConstPtr& msg);
-        int msgReturn(int c_d);
 	void setSpot(SpotInfo* arr_p, SpotInfo* current);
         bool moveToGoal(double xGoal, double yGoal);
         void testValue(SpotInfo* arr_p);
@@ -49,9 +48,6 @@ Mode_two::~Mode_two() {}
 void Mode_two::msgCallback(const sap_mode_two::Msg::ConstPtr &msg) {
         cout<<"Received data: "<< msg->pmsdata<<endl;
         current_data=msg->pmsdata;
-}
-int Mode_two::msgReturn(int c_d){
-    return c_d;
 }
 
 void Mode_two::setSpot(SpotInfo* arr_p, SpotInfo* current) {
@@ -134,7 +130,7 @@ void Mode_two::testValue(SpotInfo* arr_p) {
 
 		if (goalReached) {
 			ROS_INFO("Congratulations!");
-                        cout << "current_data : " << msgReturn(current_data);
+                        cout << "current_data : " << current_data;
 		}
 
 		else
