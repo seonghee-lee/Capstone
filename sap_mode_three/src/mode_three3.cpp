@@ -235,7 +235,7 @@ int main(int argc, char** argv) {
         }
 
         //navigation.sortingSpot(p);
-        sort(p,p+4;compare);
+        sort(p,p+4,compare);
 
         x=p->x_cordinate;
         y=p->y_cordinate;
