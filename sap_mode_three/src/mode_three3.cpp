@@ -228,13 +228,14 @@ int main(int argc, char** argv) {
                 avg=sum/15;
                 current_p->dust_data=avg;
                 ROS_INFO("AVG: %d",current_p->dust_data);
+                
             }
             else
                 ROS_INFO("Hard Luck!");
         }
 
         //navigation.sortingSpot(p);
-        sort(p,p+4;compare);
+        sort(p,p+4,compare);
 
         x=p->x_cordinate;
         y=p->y_cordinate;
