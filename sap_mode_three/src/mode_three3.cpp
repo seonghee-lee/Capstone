@@ -228,6 +228,7 @@ int main(int argc, char** argv) {
                 avg=sum/15;
                 current_p->dust_data=avg;
                 ROS_INFO("AVG: %d",current_p->dust_data);
+                
             }
             else
                 ROS_INFO("Hard Luck!");
