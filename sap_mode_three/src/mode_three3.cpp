@@ -3,6 +3,7 @@
 #include <actionlib/client/simple_action_client.h>
 #include "sap_mode_three/Msg.h"
 #include <unistd.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -11,7 +12,19 @@ struct SpotInfo {
         double y_cordinate;
         // int status;
         int dust_data;
+        int init_order;
 };
+
+bool compare(const SpotInfo &p1, const SpotInfo &p2){
+  if(p1.dust_data>p2.dust_data)
+    return true;
+  else if(p1.dust_data==p2.dust_data)
+    //sorted by the sequence of array value order
+    return p1.init_order>p2.init_order;
+  else {
+    return false;
+  }
+}
 
 class Navigation{
 public:
@@ -19,8 +32,8 @@ public:
     ~Navigation();
     void setSpot(SpotInfo* arr_p, SpotInfo* current);
     bool moveToGoal(double xGoal, double yGoal);
-    void sortingSpot(SpotInfo* arr_p);
-    void swap(SpotInfo *a, SpotInfo *b);
+    //void sortingSpot(SpotInfo* arr_p);
+    //void swap(SpotInfo *a, SpotInfo *b);
 };
 
 
@@ -30,11 +43,13 @@ Navigation::Navigation(){}
 //Destructor
 Navigation::~Navigation() {}
 
+/*
 void Navigation::swap(SpotInfo *a, SpotInfo *b){
   SpotInfo tmp=*a;
   *a=*b;
   *b=tmp;
 }
+*/
 
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
         //initialize spots' status
@@ -46,15 +61,22 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
         current = arr_p;
 
         //put real cordinates into array
+        current->init_order=0;
         current->x_cordinate = -0.1440;
         current->y_cordinate = -0.1525;
         current++;
+
+        current->init_order=1;
         current->x_cordinate = -0.0874;
         current->y_cordinate = -1.3411;
         current++;
+
+        current->init_order=2;
         current->x_cordinate = -0.5373;
         current->y_cordinate = -0.6266;
         current++;
+
+        current->init_order=3;
         current->x_cordinate = -0.4828;
         current->y_cordinate = -1.5649;
 
@@ -104,6 +126,7 @@ bool Navigation::moveToGoal(double xGoal, double yGoal) {
                 return false;
         }
 }
+/*
 void Navigation::sortingSpot(SpotInfo *arr_p){
   int arr_size=4;
   int maxIndex;
@@ -111,7 +134,7 @@ void Navigation::sortingSpot(SpotInfo *arr_p){
   for(int i=0;i<arr_size-1;i++){
     maxIndex=i;
     for(int j=i+1;j<arr_size;j++){
-      if(arr_p[i].dust_data>arr_p[maxIndex].dust_data){
+      if(arr_p[j].dust_data>arr_p[maxIndex].dust_data){
         maxIndex=j;
       }
     }
@@ -128,6 +151,9 @@ void Navigation::sortingSpot(SpotInfo *arr_p){
     arr_p++;
   }
 }
+*/
+
+
 
 class Subscriber{
 private:
@@ -207,7 +233,8 @@ int main(int argc, char** argv) {
                 ROS_INFO("Hard Luck!");
         }
 
-        navigation.sortingSpot(p);
+        //navigation.sortingSpot(p);
+        sort(p,p+4;compare);
 
         x=p->x_cordinate;
         y=p->y_cordinate;
