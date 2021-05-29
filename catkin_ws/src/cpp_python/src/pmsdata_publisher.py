@@ -200,21 +200,25 @@ if __name__=='__main__':
         GPIO.setup(LED_Green, GPIO.OUT, initial= GPIO.LOW)
         GPIO.setup(LED_Blue, GPIO.OUT, initial= GPIO.LOW)
         GPIO.setup(rpin,GPIO.OUT)
+
+        GPIO.output(rpin,True)
       
-        if(pmsdata<30):
-          GPIO.output(rpin,False)
+        if(pmsdata<31):
           GPIO.output(LED_Red,GPIO.LOW) #LED will be switched off
           GPIO.output(LED_Green,GPIO.LOW) #LED will be switched off
           GPIO.output(LED_Blue,GPIO.HIGH) #LED will be switched on
   
-        elif(pmsdata<80):
-          GPIO.output(rpin,False)
+        elif(pmsdata<81):
           GPIO.output(LED_Red,GPIO.LOW) #LED will be switched off
           GPIO.output(LED_Green,GPIO.HIGH) #LED will be switched on
           GPIO.output(LED_Blue,GPIO.LOW) #LED will be switched off
 
-        elif(pmsdata>80):
-          GPIO.output(rpin,True)
+        elif(pmsdata<151):
+          GPIO.output(LED_Red,GPIO.HIGH) #LED will be switched on
+          GPIO.output(LED_Green,GPIO.HIGH) #LED will be switched on
+          GPIO.output(LED_Blue,GPIO.LOW) #LED will be switched off
+
+        elif(pmsdata>=151):
           GPIO.output(LED_Red,GPIO.HIGH) #LED will be switched on
           GPIO.output(LED_Green,GPIO.LOW) #LED will be switched off
           GPIO.output(LED_Blue,GPIO.LOW) #LED will be switched off
