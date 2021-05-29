@@ -244,16 +244,14 @@ int main(int argc, char** argv) {
         if (goalReached) {
             ROS_INFO("Congratulations!");
             ROS_INFO("~Purifying~");
-            while(1){
-              ros::spinOnce();
-              p->dust_data=subscriber.getMsg();
-              navigation.inputStatus(p);
-
+            while(time<31){
               if(p->status==0)
                 break;
-              else if(time==30)
-                break;
-
+              else{
+                ros::spinOnce();
+                p->dust_data=subscriber.getMsg();
+                navigation.inputStatus(p);
+              }
               ros::Duration(1).sleep();
               time++;
             }
