@@ -149,7 +149,7 @@ private:
 public:
     Subscriber(ros::NodeHandle n);
     ~Subscriber();
-    void msgCallback(const sap_mode_three::Msg::ConstPtr& msg);
+    void msgCallback(const sap_mode_four::Msg::ConstPtr& msg);
     int getMsg();
 };
 //Constructor
@@ -159,7 +159,7 @@ Subscriber::Subscriber(ros::NodeHandle nh):n(nh){
 //Destructor
 Subscriber::~Subscriber(){}
 
-void Subscriber::msgCallback(const sap_mode_three::Msg::ConstPtr &msg) {
+void Subscriber::msgCallback(const sap_mode_four::Msg::ConstPtr &msg) {
         cout<<"Received data: "<< msg->pmsdata<<endl;
         current_data=msg->pmsdata;
 }
