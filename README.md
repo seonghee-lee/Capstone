@@ -8,6 +8,7 @@ Smart autonomous moving air purifier
 윤지희(2018312023)
 
 # Branches
+- main: 개발완료 된 것만 commit
 - remotePC_ws: https://github.com/seonghee-lee/Capstone/tree/remotePC_ws
 - raspberry_ws: https://github.com/seonghee-lee/Capstone/tree/raspberry_ws
 - Database: https://github.com/seonghee-lee/Capstone/tree/DB
