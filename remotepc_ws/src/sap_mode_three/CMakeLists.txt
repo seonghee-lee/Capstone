@@ -70,21 +70,21 @@ include_directories(
 #)
 
 #add_dependencies(
-#  mode2_node 
+#  mode3_node 
 #  ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
 #)
 
-#set_target_properties(mode2_node PROPERTIES LINKER_LANGUAGE CXX)
+#set_target_properties(mode3_node PROPERTIES LINKER_LANGUAGE CXX)
 ##실험 노드에 대한 빌드 옵션
-add_executable(node src/mode_three.cpp)
+add_executable(mode3_node src/mode_three.cpp)
 
 target_link_libraries(
-  node
+  mode3_node
   ${catkin_LIBRARIES}
 )
 
 add_dependencies(
-  node
+  mode3_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
 )
 
