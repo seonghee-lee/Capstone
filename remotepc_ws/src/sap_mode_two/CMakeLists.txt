@@ -76,15 +76,15 @@ include_directories(
 
 #set_target_properties(mode2_node PROPERTIES LINKER_LANGUAGE CXX)
 ##실험 노드에 대한 빌드 옵션
-add_executable(node src/mode_two.cpp)
+add_executable(mode2_node src/mode_two.cpp)
 
 target_link_libraries(
-  node
+  mode2_node
   ${catkin_LIBRARIES}
 )
 
 add_dependencies(
-  node
+  mode2_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
 )
 
