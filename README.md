@@ -7,6 +7,12 @@ Smart autonomous moving air purifier
 신효진(2018152019)
 윤지희(2018312023)
 
+# Branches
+remotePC_ws: https://github.com/seonghee-lee/Capstone/tree/remotePC_ws
+raspberry_ws: https://github.com/seonghee-lee/Capstone/tree/raspberry_ws
+Database: https://github.com/seonghee-lee/Capstone/tree/DB
+Web: https://github.com/seonghee-lee/Capstone/tree/Web
+
 # Schedule
 일정 및 활동 내용
 - 2020.11.08 ~ 2020.11.27: 졸업작품 아이디어 선정
