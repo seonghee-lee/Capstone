@@ -135,7 +135,7 @@ int Subscriber::getMsg(){
     return current_data;
 }
 int main(int argc, char** argv) {
-        ros::init(argc, argv, "node");
+        ros::init(argc, argv, "mode5_node");
         ros::NodeHandle nh;
         double x, y;
         bool goalReached;
