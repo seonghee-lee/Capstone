@@ -14,8 +14,8 @@ char choose(){
     std::cout<<"|'q': 종료 "<<std::endl;
     std::cout<<"|-------------------------------|"<<std::endl;
     std::cout<<"|WHICH MODE?";
-    std::cin>>mode;
-    return mode;
+    std::cin>>choice;
+    return choice;
 }
 
 
@@ -27,8 +27,8 @@ int main(int argc, char **argv) // 노드 메인 함수
     ros::Publisher mode_pub= n.advertise<sap_mode_one::mode_msg>("mode_msg", 100);
     // 루프주기를설정한다. "10" 이라는것은10Hz를말하는것으로0.1초간격으로반복된다
     ros::Rate loop_rate(10);
-    // MsgTutorial메시지파일형식으로mode라는메시지를선언
-    sap_mode_one::mode_msg mode;
+    // mode_msg메시지파일형식으로msg라는메시지를선언
+    sap_mode_one::mode_msg msg;
 
     // 메시지에사용될변수선언
     int count = 0;
@@ -39,19 +39,19 @@ int main(int argc, char **argv) // 노드 메인 함수
         int n = choice - '0'; //int형으로 형변환
         msg.data=n;    // choice라는 변수값을 msg의 하위 data 메시지에 담는다
         if(choice=='1'){	//Mode 1 실행
-            ros_tutorial_pub.publish(msg);// 메시지를발행한다
+            mode_pub.publish(msg);// 메시지를발행한다
         }
         else if(choice=='2'){	//Mode 2 실행
-            ros_tutorial_pub.publish(msg);// 메시지를발행한다
+            mode_pub.publish(msg);// 메시지를발행한다
         }
         else if(choice=='3'){	//Mode 3 실행
-            ros_tutorial_pub.publish(msg);// 메시지를발행한다
+            mode_pub.publish(msg);// 메시지를발행한다
         }
         else if(choice=='4'){	//Mode 4 실행
-            ros_tutorial_pub.publish(msg);// 메시지를발행한다
+            mode_pub.publish(msg);// 메시지를발행한다
         }
         else if(choice=='5'){	//Mode 5 실행
-            ros_tutorial_pub.publish(msg);// 메시지를발행한다
+            mode_pub.publish(msg);// 메시지를발행한다
         }
     }while(choice !='q');
 

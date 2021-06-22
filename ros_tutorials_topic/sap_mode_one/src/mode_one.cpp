@@ -21,7 +21,7 @@ int mode;
 // 메시지콜백함수로써, 밑에서설정한ros_tutorial_msg라는이름의토픽
 // 메시지를수신하였을때동작하는함수이다
 // 입력메시지로는ros_tutorials_topic패키지의MsgTutorial메시지를받도록되어있다
-void msgCallback(const ros_tutorials_topic::MsgTutorial::ConstPtr& msg)
+void msgCallback(const sap_mode_one::mode_msg::ConstPtr& msg)
 {
     ROS_INFO("recievemsg= %d", msg->data); // data 메시지를표시한다
     mode=msg->data;
@@ -35,10 +35,13 @@ int main(int argc, char** argv){
         // 콜백함수호출을위한함수로써, 메시지가수신되기를대기,
         // 수신되었을경우콜백함수를실행한다
 
-        ROS_INFO("recievemsg= %d", mode); // mode값 표시한다
+
 
         ros::spin();
 	//사용자로부터 메뉴를 선택받는다.
+
+
+        ROS_INFO("mode= %d", mode); // mode값 표시한다
 
 	char choice='q';
         if(mode==1){
