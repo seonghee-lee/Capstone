@@ -10,7 +10,7 @@ using namespace std;
 struct SpotInfo {
         double x_cordinate;
         double y_cordinate;
-        // int status;
+        int status;
         int dust_data;
         int init_order;
 };
@@ -32,8 +32,8 @@ public:
     ~Navigation();
     void setSpot(SpotInfo* arr_p, SpotInfo* current);
     bool moveToGoal(double xGoal, double yGoal);
-    //void sortingSpot(SpotInfo* arr_p);
-    //void swap(SpotInfo *a, SpotInfo *b);
+    void inputStatus(SpotInfo* arr_p);
+    void airPurify(SpotInfo* arr_p);
 };
 
 
@@ -42,14 +42,6 @@ Navigation::Navigation(){}
 
 //Destructor
 Navigation::~Navigation() {}
-
-/*
-void Navigation::swap(SpotInfo *a, SpotInfo *b){
-  SpotInfo tmp=*a;
-  *a=*b;
-  *b=tmp;
-}
-*/
 
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
         //initialize spots' status
@@ -126,34 +118,35 @@ bool Navigation::moveToGoal(double xGoal, double yGoal) {
                 return false;
         }
 }
-/*
-void Navigation::sortingSpot(SpotInfo *arr_p){
-  int arr_size=4;
-  int maxIndex;
 
-  for(int i=0;i<arr_size-1;i++){
-    maxIndex=i;
-    for(int j=i+1;j<arr_size;j++){
-      if(arr_p[j].dust_data>arr_p[maxIndex].dust_data){
-        maxIndex=j;
-      }
+void Navigation::inputStatus(SpotInfo *arr_p){
+  for(int i=0;i<4;i++,arr_p++){
+    if(arr_p->dust_data<=30){
+      cout<<"Air quality: GREAT :D "<<endl;
+      arr_p->status=0;
     }
-    swap(&arr_p[i],&arr_p[maxIndex]);
-  }
-
-  for(int i=0;i<4;i++){
-    cout<<"----sorting print----"<<endl;
-    cout<<"x: "<<arr_p->x_cordinate<<endl;
-    cout<<"y: "<<arr_p->y_cordinate<<endl;
-    cout<<"dust: "<<arr_p->dust_data<<endl;
-    cout<<"---------------------"<<endl;
-
-    arr_p++;
+    else if(arr_p->dust_data<=80){
+      cout<<"Air quality: NOT BAD :) "<<endl;
+      arr_p->status=1;
+    }
+    else if(arr_p->dust_data>80){
+      cout<<"Air quality: BAD :( "<<endl;
+      arr_p->status=2;
+    }
   }
 }
-*/
 
-
+void Navigation::airPurify(SpotInfo *arr_p){
+  if(arr_p->status==0){ //great
+    ros::Duration(10).sleep();
+  }
+  else if(arr_p->status==1){ //not bad
+    ros::Duration(30).sleep();
+  }
+  else if(arr_p->status==2){ //bad
+    ros::Duration(60).sleep();
+  }
+}
 
 class Subscriber{
 private:
@@ -234,8 +227,7 @@ int main(int argc, char** argv) {
             else
                 ROS_INFO("Hard Luck!");
         }
-
-        //navigation.sortingSpot(p);
+        navigation.inputStatus(p);
         sort(p,p+4,compare);
 
         x=p->x_cordinate;

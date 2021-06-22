@@ -1,7 +1,7 @@
 #include <ros/ros.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
-#include "sap_mode_three/Msg.h"
+#include "sap_mode_five/Msg.h"
 #include <unistd.h>
 #include <algorithm>
 
@@ -10,20 +10,16 @@ using namespace std;
 struct SpotInfo {
         double x_cordinate;
         double y_cordinate;
-        // int status;
+        int status;
         int dust_data;
         int init_order;
 };
 
-bool compare(const SpotInfo &p1, const SpotInfo &p2){
-  if(p1.dust_data>p2.dust_data)
-    return true;
-  else if(p1.dust_data==p2.dust_data)
-    //sorted by the sequence of array value order
-    return p1.init_order>p2.init_order;
-  else {
-    return false;
-  }
+int delay(SpotInfo* arr_p){
+    if(arr_p->status==0)    return 0;
+    else if(arr_p->status==1)   return 180;
+    else if(arr_p->status==2)   return 420;
+    else if(arr_p->status==3)   return 600;
 }
 
 class Navigation{
@@ -32,24 +28,15 @@ public:
     ~Navigation();
     void setSpot(SpotInfo* arr_p, SpotInfo* current);
     bool moveToGoal(double xGoal, double yGoal);
-    //void sortingSpot(SpotInfo* arr_p);
-    //void swap(SpotInfo *a, SpotInfo *b);
+    void inputStatus(SpotInfo* arr_p);
+    //void airPurify(SpotInfo* arr_p);
 };
-
 
 //Constructor
 Navigation::Navigation(){}
 
 //Destructor
 Navigation::~Navigation() {}
-
-/*
-void Navigation::swap(SpotInfo *a, SpotInfo *b){
-  SpotInfo tmp=*a;
-  *a=*b;
-  *b=tmp;
-}
-*/
 
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
         //initialize spots' status
@@ -126,34 +113,25 @@ bool Navigation::moveToGoal(double xGoal, double yGoal) {
                 return false;
         }
 }
-/*
-void Navigation::sortingSpot(SpotInfo *arr_p){
-  int arr_size=4;
-  int maxIndex;
 
-  for(int i=0;i<arr_size-1;i++){
-    maxIndex=i;
-    for(int j=i+1;j<arr_size;j++){
-      if(arr_p[j].dust_data>arr_p[maxIndex].dust_data){
-        maxIndex=j;
-      }
+void Navigation::inputStatus(SpotInfo *arr_p){
+    if(arr_p->dust_data<=30){
+      cout<<"Air quality: GREAT :D "<<endl;
+      arr_p->status=0;
     }
-    swap(&arr_p[i],&arr_p[maxIndex]);
-  }
-
-  for(int i=0;i<4;i++){
-    cout<<"----sorting print----"<<endl;
-    cout<<"x: "<<arr_p->x_cordinate<<endl;
-    cout<<"y: "<<arr_p->y_cordinate<<endl;
-    cout<<"dust: "<<arr_p->dust_data<<endl;
-    cout<<"---------------------"<<endl;
-
-    arr_p++;
-  }
+    else if(arr_p->dust_data<=80){
+      cout<<"Air quality: NOT BAD :) "<<endl;
+      arr_p->status=1;
+    }
+    else if(arr_p->dust_data<=150){
+      cout<<"Air quality: BAD :( "<<endl;
+      arr_p->status=2;
+    }
+    else if(arr_p->dust_data>151){
+      cout<<"Air quality: VERY BAD!!! "<<endl;
+      arr_p->status=3;
+    }
 }
-*/
-
-
 
 class Subscriber{
 private:
@@ -164,7 +142,7 @@ private:
 public:
     Subscriber(ros::NodeHandle n);
     ~Subscriber();
-    void msgCallback(const sap_mode_three::Msg::ConstPtr& msg);
+    void msgCallback(const sap_mode_five::Msg::ConstPtr& msg);
     int getMsg();
 };
 //Constructor
@@ -174,7 +152,7 @@ Subscriber::Subscriber(ros::NodeHandle nh):n(nh){
 //Destructor
 Subscriber::~Subscriber(){}
 
-void Subscriber::msgCallback(const sap_mode_three::Msg::ConstPtr &msg) {
+void Subscriber::msgCallback(const sap_mode_five::Msg::ConstPtr &msg) {
         cout<<"Received data: "<< msg->pmsdata<<endl;
         current_data=msg->pmsdata;
 }
@@ -193,6 +171,7 @@ int main(int argc, char** argv) {
         int arr[15]; // 미세먼지 수치 값 평균 구하기 위한 배열
         int sum = 0; //미세먼지 수치 값 평균 구하기 위한 합
         int avg; // 미세먼지 수치 평균값
+        int time=0;
         SpotInfo spot[4];
         SpotInfo *p, *current_p;
         Navigation navigation;
@@ -203,6 +182,7 @@ int main(int argc, char** argv) {
 
         navigation.setSpot(p, current_p);
 
+
         for (int i = 0; i<4; i++,current_p++) {
             x = current_p->x_cordinate;
             y = current_p->y_cordinate;
@@ -211,48 +191,37 @@ int main(int argc, char** argv) {
 
             if (goalReached) {
                 ROS_INFO("Congratulations!");
-                ros::Duration(10).sleep();
+                ros::Duration(10).sleep(); //10 second
 
                 for(int j=0;j<15;j++){
                     ros::spinOnce();
                     current_data=subscriber.getMsg();
                     ROS_INFO("current_data : %d", current_data);
                     arr[j]=current_data;
-                    usleep(1000000);
+                    usleep(1000000); //1 second
                 }
 
                 for(int j=0;j<15;j++){
-                 sum=sum+arr[i];
+                 sum=sum+arr[j];
                 }
 
                 avg=sum/15;
                 current_p->dust_data=avg;
                 ROS_INFO("AVG: %d",current_p->dust_data);
                 sum=0;
+
+                navigation.inputStatus(current_p);
+
+                ROS_INFO("~Purifying~");
+                ros::Duration(delay(current_p)).sleep();
+
                 
             }
             else
                 ROS_INFO("Hard Luck!");
         }
 
-        //navigation.sortingSpot(p);
-        sort(p,p+4,compare);
-
-        x=p->x_cordinate;
-        y=p->y_cordinate;
-
-        cout << "go to x :" << x << ", y :" << y << endl;
-        cout<<"to the highest data : %d"<<p->dust_data<<endl;
-        goalReached = navigation.moveToGoal(x, y);
-
-        if (goalReached) {
-            ROS_INFO("Congratulations!");
-            ROS_INFO("~Purifying~");
-            ros::Duration(10).sleep();
-        }
-        else
-            ROS_INFO("Hard Luck!");
-
         ros::Rate rate(5);
+        ros::spin();
         return 0;
 }

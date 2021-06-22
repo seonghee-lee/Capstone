@@ -10,7 +10,7 @@ using namespace std;
 struct SpotInfo {
         double x_cordinate;
         double y_cordinate;
-        // int status;
+        int status;
         int dust_data;
         int init_order;
 };
@@ -20,7 +20,7 @@ bool compare(const SpotInfo &p1, const SpotInfo &p2){
     return true;
   else if(p1.dust_data==p2.dust_data)
     //sorted by the sequence of array value order
-    return p1.init_order>p2.init_order;
+    return p1.init_order<p2.init_order;
   else {
     return false;
   }
@@ -32,24 +32,13 @@ public:
     ~Navigation();
     void setSpot(SpotInfo* arr_p, SpotInfo* current);
     bool moveToGoal(double xGoal, double yGoal);
-    //void sortingSpot(SpotInfo* arr_p);
-    //void swap(SpotInfo *a, SpotInfo *b);
 };
-
 
 //Constructor
 Navigation::Navigation(){}
 
 //Destructor
 Navigation::~Navigation() {}
-
-/*
-void Navigation::swap(SpotInfo *a, SpotInfo *b){
-  SpotInfo tmp=*a;
-  *a=*b;
-  *b=tmp;
-}
-*/
 
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
         //initialize spots' status
@@ -126,34 +115,6 @@ bool Navigation::moveToGoal(double xGoal, double yGoal) {
                 return false;
         }
 }
-/*
-void Navigation::sortingSpot(SpotInfo *arr_p){
-  int arr_size=4;
-  int maxIndex;
-
-  for(int i=0;i<arr_size-1;i++){
-    maxIndex=i;
-    for(int j=i+1;j<arr_size;j++){
-      if(arr_p[j].dust_data>arr_p[maxIndex].dust_data){
-        maxIndex=j;
-      }
-    }
-    swap(&arr_p[i],&arr_p[maxIndex]);
-  }
-
-  for(int i=0;i<4;i++){
-    cout<<"----sorting print----"<<endl;
-    cout<<"x: "<<arr_p->x_cordinate<<endl;
-    cout<<"y: "<<arr_p->y_cordinate<<endl;
-    cout<<"dust: "<<arr_p->dust_data<<endl;
-    cout<<"---------------------"<<endl;
-
-    arr_p++;
-  }
-}
-*/
-
-
 
 class Subscriber{
 private:
@@ -222,7 +183,7 @@ int main(int argc, char** argv) {
                 }
 
                 for(int j=0;j<15;j++){
-                 sum=sum+arr[i];
+                 sum=sum+arr[j];
                 }
 
                 avg=sum/15;
@@ -238,11 +199,22 @@ int main(int argc, char** argv) {
         //navigation.sortingSpot(p);
         sort(p,p+4,compare);
 
+        // /////////////sorting check/////////////////////////////
+        current_p=p;
+        for(int i=0;i<4;i++,current_p++){
+          cout<<"----sorting print----"<<endl;
+          cout<<"x: "<<current_p->x_cordinate<<endl;
+          cout<<"y: "<<current_p->y_cordinate<<endl;
+          cout<<"dust: "<<current_p->dust_data<<endl;
+          cout<<"---------------------"<<endl;
+        }
+        // ///////////////////////////////////////////////////////
+
         x=p->x_cordinate;
         y=p->y_cordinate;
 
         cout << "go to x :" << x << ", y :" << y << endl;
-        cout<<"to the highest data : %d"<<p->dust_data<<endl;
+        cout<<"to the highest data : "<<p->dust_data<<endl;
         goalReached = navigation.moveToGoal(x, y);
 
         if (goalReached) {
