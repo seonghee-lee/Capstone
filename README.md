@@ -30,6 +30,10 @@ Smart autonomous moving air purifier
 ![HW](https://user-images.githubusercontent.com/74324866/112432150-cfb65f80-8d83-11eb-83c8-93d56ab1d572.png)
 
 
+# License
+이 프로젝트는 한국산업기술대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트“스마트 자율주행 공기청정기(Smart Autonomous Moving Air Purifier)”을 수행하는  
+(S3-3, 임아연, 신효진, 윤지희, 이성희)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
+
 # Reference
 
 - TURTLEBOT3 Github: https://github.com/ROBOTIS-GIT/turtlebot3
