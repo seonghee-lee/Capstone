@@ -39,7 +39,6 @@ Smart autonomous moving air purifier
 ![그림1](https://user-images.githubusercontent.com/74324866/123063887-c1421780-d448-11eb-9c23-baa9f1f4f439.png)
 
 # Hardware
-![image](https://user-images.githubusercontent.com/74324866/123063658-948e0000-d448-11eb-9a9a-e7d83b9e7c88.png)
 ![HW](https://user-images.githubusercontent.com/74324866/112432150-cfb65f80-8d83-11eb-83c8-93d56ab1d572.png)
 
 # Map
