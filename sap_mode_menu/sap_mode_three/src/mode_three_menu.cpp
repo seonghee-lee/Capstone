@@ -3,15 +3,11 @@
 #include "std_msgs/String.h"
 #include <mysql/mysql.h>
 #include <string>
-
 #include <move_base_msgs/MoveBaseAction.h>
-
 #include <actionlib/client/simple_action_client.h>
-
 #include "sap_mode_three/Msg.h"
-
+#include "sap_mode_three/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
 #include <unistd.h>
-
 #include <algorithm>
 
 
@@ -65,11 +61,11 @@ class Mode{
 private:
   ros::NodeHandle n;
   ros::Subscriber mode_sub;
-  int mode_data;
+  int mode_data=0;
 public:
   Mode(ros::NodeHandle n);
   ~Mode();
-  void modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr& msg);
+  void modeMsgCallback(const sap_mode_three::mode_msg::ConstPtr& m_msg);
   int getMode();
 };
 //Constructor
@@ -80,10 +76,10 @@ Mode::Mode(ros::NodeHandle nh):n(nh){
 Mode::~Mode(){}
 // 메시지콜백함수로써, 밑에서설정msg라는이름의토픽
 // 메시지를수신하였을때동작하는함수이다
-// 입력메시지로는sap_mode_one패키지의mode_msg메시지를받도록되어있다
-void Mode::modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr &msg) {
-  ROS_INFO("Received data: %d", msg->data);
-  mode_data=msg->data;
+// 입력메시지로는sap_mode_three패키지의mode_msg메시지를받도록되어있다
+void Mode::modeMsgCallback(const sap_mode_three::mode_msg::ConstPtr &m_msg) {
+  ROS_INFO("Received data: %d", m_msg->data);
+  mode_data=m_msg->data;
 }
 int Mode::getMode(){
   return mode_data;
@@ -299,7 +295,7 @@ int main(int argc, char** argv) {
   int sum =0; //미세먼지 수치 값 평균 구하기 위한 합
 
   int avg; // 미세먼지 수치 평균값
-  int mode_data;
+  int mode_data=0;
   Mode mode(nh);
 
   SpotInfo spot[4];
