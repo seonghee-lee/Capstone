@@ -45,8 +45,7 @@ Smart autonomous moving air purifier
 <img width="355" alt="map" src="https://user-images.githubusercontent.com/74324866/123063970-d454e780-d448-11eb-9a47-53b7989a6270.png">
 
 # License
-이 프로젝트는 한국산업기술대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트“스마트 자율주행 공기청정기(Smart Autonomous Moving Air Purifier)”을 수행하는  
-(S3-3, 임아연, 신효진, 윤지희, 이성희)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
+이 프로젝트는 한국산업기술대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트“스마트 자율주행 공기청정기(Smart Autonomous Moving Air Purifier)”을 수행하는 (S3-3, 임아연, 신효진, 윤지희, 이성희)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
 
 # Reference
 
