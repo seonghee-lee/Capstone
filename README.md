@@ -32,7 +32,7 @@ Smart autonomous moving air purifier
 # System Scenario
 ![image](https://user-images.githubusercontent.com/74324866/123063076-0dd92300-d448-11eb-83b4-033a072a2d5e.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063101-16315e00-d448-11eb-9e9e-4b1ae749cbea.png)
-![image](https://user-images.githubusercontent.com/74324866/123063166-221d2000-d448-11eb-8314-13981cb8787c.png)
+![image](https://user-images.githubusercontent.com/74324866/123063397-542e8200-d448-11eb-8eab-8ec03b3ee6a2.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063212-29442e00-d448-11eb-8b4a-687ef40e908c.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063230-2e08e200-d448-11eb-9c84-ebcf082c6393.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063275-37924a00-d448-11eb-8306-0fa3b2ef4b40.png)
