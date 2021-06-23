@@ -5,14 +5,14 @@
 bool moveToGoal(double xGoal, double yGoal);
 char choose();
 //모의 환경에서 사용하는 좌표 정보
-double xspot0=0.08471;
-double yspot0=-0.47712;
-double xspot1=0.118257;
-double yspot1=0.47154422;
-double xspot2=0.45796;
-double yspot2=-0.07302;
-double xspot3=0.38;
-double yspot3=0.80;
+double xspot0=-0.1440;
+double yspot0=-0.1525;
+double xspot1=-0.0874;
+double yspot1=-1.3411;
+double xspot2=-0.5373;
+double yspot2=-0.6266;
+double xspot3=-0.4828;
+double yspot3=-1.5649;
 bool goalReached=false;
 int main(int argc, char** argv){
 	ros::init(argc, argv, "mode1_node");
