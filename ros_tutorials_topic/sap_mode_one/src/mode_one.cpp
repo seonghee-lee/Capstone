@@ -17,34 +17,48 @@ double yspot3=0.80;
 bool goalReached=false;
 
 int mode;
-
-// 메시지콜백함수로써, 밑에서설정한ros_tutorial_msg라는이름의토픽
+class Mode{
+private:
+    ros::NodeHandle n;
+    ros::Subscriber mode_sub;
+    int mode_data;
+public:
+    Mode(ros::NodeHandle n);
+    ~Mode();
+    void modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr& msg);
+    int getMode();
+};
+//Constructor
+Mode::Mode(ros::NodeHandle nh):n(nh){
+    mode_sub = n.subscribe("data", 10, &Mode::modeMsgCallback, this);
+}
+//Destructor
+Mode::~Mode(){}
+// 메시지콜백함수로써, 밑에서설정msg라는이름의토픽
 // 메시지를수신하였을때동작하는함수이다
-// 입력메시지로는ros_tutorials_topic패키지의MsgTutorial메시지를받도록되어있다
-void msgCallback(const sap_mode_one::mode_msg::ConstPtr& msg)
-{
-    ROS_INFO("recievemsg= %d", msg->data); // data 메시지를표시한다
-    mode=msg->data;
+// 입력메시지로는sap_mode_one패키지의mode_msg메시지를받도록되어있다
+void Mode::modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr &msg) {
+        ROS_INFO("Received data: %d", msg->data);
+        mode_data=msg->data;
+}
+int Mode::getMode(){
+    return mode_data;
 }
 
 int main(int argc, char** argv){
         ros::init(argc, argv, "mode1_node");// 노드명초기화
-        ros::NodeHandle n;// ROS 시스템과통신을위한노드핸들선언
-
-        ros::Subscriber mode_sub= n.subscribe("mode_msg", 100, msgCallback);
-        // 콜백함수호출을위한함수로써, 메시지가수신되기를대기,
-        // 수신되었을경우콜백함수를실행한다
-
-
+        ros::NodeHandle nh;// ROS 시스템과통신을위한노드핸들선언
+        int mode_data; //현재 선택된 모드
+        Mode mode(nh);
 
         ros::spin();
 	//사용자로부터 메뉴를 선택받는다.
 
-
-        ROS_INFO("mode= %d", mode); // mode값 표시한다
+        mode_data= mode.getMode(); //현재 선택된 모드를 mode_data에 저장
+        ROS_INFO("mode= %d", mode_data); // mode값 표시한다
 
 	char choice='q';
-        if(mode==1){
+        if(mode_data==1){
             do{
                     choice=choose();
                     if(choice=='0'){	//0번 스팟으로 이동
