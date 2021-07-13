@@ -199,10 +199,10 @@ int Subscriber::getMsg() {
 int main(int argc, char** argv) { // 노드 메인 함수
 	ros::init(argc, argv, "mode3_node"); // 노드명 선언
 	ros::NodeHandle nh; // ROS 시스템과 통신을 위한 노드핸들 선언
+	double x, y; // 스팟의 좌표
 	bool goalReached; // 목적지 도착 성공여부
 	int current_data; // 현재 미세먼지 데이터
 	int mode_data = 0; // 현재 선택된 모드
-	double x, y; // 스팟의 좌표
 	int loop_time = 0;
 	int arr[15]; // 미세먼지 수치 값 평균 구하기 위한 배열
 	int sum = 0; //미세먼지 수치 값 평균 구하기 위한 합
