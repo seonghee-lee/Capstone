@@ -97,6 +97,7 @@ int main(int argc, char** argv){ // 노드 메인 함수
 			}
 		}
 	}
+	
 	return 0;
 }
 
@@ -147,5 +148,6 @@ char choose(){
 	std::cout<<"|-------------------------------|"<<std::endl;
 	std::cout<<"|WHERE TO GO?";
 	std::cin>>choice;
+	
 	return choice;
 }
