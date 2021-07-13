@@ -50,7 +50,7 @@ Mode::~Mode(){}
 
 // 메시지콜백함수로써, 밑에서설정 msg라는 이름의 토픽
 // 메시지를 수신하였을때 동작하는 함수이다
-// 입력메시지로는 sap_mode_one패키지의 mode_msg메시지를 받도록되어있다
+// 입력메시지로는 sap_mode_one패키지의 mode_msg메시지를 받도록 되어있다
 void Mode::modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr &msg) {
         ROS_INFO("Received data: %d", msg->data);
         mode_data=msg->data;
