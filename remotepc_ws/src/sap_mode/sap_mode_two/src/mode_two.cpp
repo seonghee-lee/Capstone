@@ -66,10 +66,10 @@ public:
 	bool moveToGoal(double xGoal, double yGoal);
 };
 
-//Constructor
+// Constructor
 Navigation::Navigation() {}
 
-//Destructor
+// Destructor
 Navigation::~Navigation() {}
 
 // 모의 환경에서 사용하는 좌표 정보를 설정하는 함수이다
@@ -82,7 +82,7 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 	}
 	current = arr_p;
 
-	// x,y의 실좌표를 설정한다
+	// x, y의 실좌표를 설정한다
 	current->x_cordinate = -1.2496;
 	current->y_cordinate = -3.395;
 	current++;
@@ -140,7 +140,7 @@ bool Navigation::moveToGoal(double xGoal, double yGoal) {
 	}
 }
 
-//미세먼지 데이터를 Subscribe하기 위한 클래스
+// 미세먼지 데이터를 Subscribe하기 위한 클래스
 class Subscriber {
 private:
 	ros::NodeHandle n;
@@ -153,12 +153,12 @@ public:
 	int getMsg();
 };
 
-//Constructor
+// Constructor
 Subscriber::Subscriber(ros::NodeHandle nh) :n(nh) {
 	sub = n.subscribe("pmsdata", 10, &Subscriber::msgCallback, this);
 }
 
-//Destructor
+// Destructor
 Subscriber::~Subscriber() {}
 
 // 메시지콜백함수로써, 밑에서설정 msg라는 이름의 토픽
@@ -169,7 +169,7 @@ void Subscriber::msgCallback(const sap_mode_two::Msg::ConstPtr &msg) { // 라즈
 	current_data = msg->pmsdata; // current_data 변수에 현재 미세먼지 데이터를 저장한다
 }
 
-//현재 미세먼지 데이터를 반환하는 함수이다
+// 현재 미세먼지 데이터를 반환하는 함수이다
 int Subscriber::getMsg() {
 	return current_data;
 }
@@ -210,7 +210,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 					current_data = subscriber.getMsg(); // 제일 최근 미세먼지 데이터를 current_data 변수에 넣는다
 					ROS_INFO("current_data : %d", current_data); // 현재 미세먼지 데이터를 출력한다
 				}
-				else{ //도착 실패했을 경우
+				else{ // 도착 실패했을 경우
 					ROS_INFO("Hard Luck!");
 				}
 			}
