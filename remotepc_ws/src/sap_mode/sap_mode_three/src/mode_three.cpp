@@ -263,7 +263,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 					for (int j = 0; j < 15; j++) { // 스팟 내에서 미세먼지 데이터 15개를 배열 arr[]에 저장한다
 						ros::spinOnce(); // 버퍼에 있는 미세먼지 데이터를 받는다
 						current_data = subscriber.getMsg();	 // 제일 최근 미세먼지 데이터를 current_data 변수에 넣는다
-            ROS_INFO("current_data : %d", current_data); // 현재 미세먼지 데이터를 출력한다
+						ROS_INFO("current_data : %d", current_data); // 현재 미세먼지 데이터를 출력한다
 						arr[j] = current_data;	// 배열에 저장한다
 						usleep(1000000);	// 1초 delay
 					}
@@ -273,8 +273,8 @@ int main(int argc, char** argv) { // 노드 메인 함수
 					avg = sum / 15;	// 배열에 담겨있는 데이터의 평균을 구한다
 					current_p->dust_data = avg;	// 평균값을 구조체에 해당 스팟의 dust_data에 저장한다
 					ROS_INFO("AVG: %d", current_p->dust_data); // 평균값 출력
-          
-          /////////////////////////////////database insert////////////////////////////////
+					
+					/////////////////////////////////database insert////////////////////////////////
 					std::string query = "INSERT INTO test_table (spot, pmsdata, date) VALUES ('" + to_string(i) + "', '" + to_string(avg) + "', NOW());";
 					mysql_query(connection, query.c_str());
 					////////////////////////////////////////////////////////////////////////////////
@@ -287,9 +287,9 @@ int main(int argc, char** argv) { // 노드 메인 함수
 			}
 			//미세먼지 수치를 바탕으로 정렬한다
 			sort(p, p + 4, compare);
-      
-      //////////////////////////////////sorting check/////////////////////////////////
-
+			
+			//////////////////////////////////sorting check/////////////////////////////////
+			
 			//정렬이 성공적으로 되었는지 확인한다.
 			current_p = p;
 
@@ -300,9 +300,9 @@ int main(int argc, char** argv) { // 노드 메인 함수
 				cout << "dust: " << current_p->dust_data << endl;
 				cout << "---------------------" << endl;
 			}
-      ////////////////////////////////////////////////////////////////////////////////
-      
-      // x, y는 최고 미세먼지 수치 스팟의 좌표
+			////////////////////////////////////////////////////////////////////////////////
+			
+			// x, y는 최고 미세먼지 수치 스팟의 좌표
 			x = p->x_cordinate;
 			y = p->y_cordinate;	
 			cout << "go to x :" << x << ", y :" << y << endl;
@@ -314,7 +314,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 				ros::Duration(10).sleep(); // 10초 정화
 			}
 			else{ //도착 실패했을 경우
-        ROS_INFO("Hard Luck!");
+				ROS_INFO("Hard Luck!");
 			}
 	}
 
