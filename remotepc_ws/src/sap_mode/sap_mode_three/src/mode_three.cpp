@@ -27,24 +27,22 @@ MYSQL_ROW row;
 
 // 스팟별 정보를 담을 구조체
 struct SpotInfo {
-  double x_cordinate; // x좌표
+	double x_cordinate; // x좌표
 	double y_cordinate; // y좌표
-  int status; // 스팟의 미세먼지 상태
+	int status; // 스팟의 미세먼지 상태
 	int dust_data; // 스팟의 미세먼지 수치
-  int init_order;
+	//int init_order;
 };
 
 // 정렬 함수: 미세먼지 수치를 기준으로 내림차순 정렬한다.
 // 미세먼지 수치가 같은 경우 스팟 번호 순서대로 오름차순 정렬한다.
 bool compare(const SpotInfo &p1, const SpotInfo &p2) {
 	if (p1.dust_data > p2.dust_data)
-    return true;
-  else if (p1.dust_data == p2.dust_data)
-		//sorted by the sequence of array value order
+		return true;
+	else if (p1.dust_data == p2.dust_data) //sorted by the sequence of array value order
 		return p1.init_order < p2.init_order;
-	else {
+	else
 		return false;
-	}
 }
 
 // 사용자 선택 모드를 Subscribe하기 위한 클래스
@@ -203,15 +201,15 @@ int main(int argc, char** argv) { // 노드 메인 함수
 	ros::NodeHandle nh; // ROS 시스템과 통신을 위한 노드핸들 선언
 	bool goalReached; // 목적지 도착 성공여부
 	int current_data; // 현재 미세먼지 데이터
-  int mode_data = 0; // 현재 선택된 모드
-  double x, y; 	// 최고 미세먼지 수치 스팟의 좌표
+	int mode_data = 0; // 현재 선택된 모드
+	double x, y; 	// 최고 미세먼지 수치 스팟의 좌표
 	int loop_time = 0;
 	int arr[15]; // 미세먼지 수치 값 평균 구하기 위한 배열
 	int sum = 0; //미세먼지 수치 값 평균 구하기 위한 합
 	int avg; // 미세먼지 수치 평균값
-  SpotInfo spot[4]; // 스팟 정보를 담는 배열
+	SpotInfo spot[4]; // 스팟 정보를 담는 배열
 	SpotInfo *p, *current_p;
-  Mode mode(nh);
+	Mode mode(nh);
 	Navigation navigation;
 	Subscriber subscriber(nh);
 
