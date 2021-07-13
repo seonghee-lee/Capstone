@@ -61,8 +61,8 @@ char choose(){
 	std::cout<<"|-------------------------------|"<<std::endl;
 	std::cout<<"|원하는 모드를 선택하세요."<<std::endl;
 	std::cout<<"| Mode 1: 사용자 설정 스팟 이동 모드 "<<std::endl;
-	std::cout<<"| Mode 2: 전체스팟 데이터 측정 모드 "<<std::endl;
-	std::cout<<"| Mode 3: 최고 미세먼지 구역 이동 모드 "<<std::endl;
+	std::cout<<"| Mode 2: 전체 스팟 데이터 측정 모드 "<<std::endl;
+	std::cout<<"| Mode 3: 최고 미세먼지 스팟 이동 모드 "<<std::endl;
 	std::cout<<"| Mode 4: 미세먼지 수치에 따른 자율주행 모드 "<<std::endl;
 	std::cout<<"| Mode 5: 순차적 자율주행 모드 "<<std::endl;
 	std::cout<<"|'0': 정지"<<std::endl;
