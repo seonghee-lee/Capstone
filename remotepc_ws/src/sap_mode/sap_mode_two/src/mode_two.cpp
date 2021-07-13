@@ -72,9 +72,9 @@ Navigation::Navigation() {}
 //Destructor
 Navigation::~Navigation() {}
 
-// 모의 환경에서 사용하는 좌표 정보를 하는 함수이다
+// 모의 환경에서 사용하는 좌표 정보를 설정하는 함수이다
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
-	//스팟의 상태와 미세먼지 수치를 0으로 초기화한다.
+	// 스팟의 상태와 미세먼지 수치를 0으로 초기화한다
 	for (int i = 0; i < 4; i++) {
 		current->status = 0;
 		current->dust_data = 0;
@@ -95,7 +95,7 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 	current->x_cordinate = 0.3837;
 	current->y_cordinate = -0.0119;
 	
-	//모든 좌표의 상태를 출력한다.
+	// 모든 좌표의 상태를 출력한다
 	for (int i = 0; i < 4; i++) {
 		cout << "spot[" << i << "].x_cordinate : " << arr_p->x_cordinate << endl;
 		cout << "spot[" << i << "].y_cordinate : " << arr_p->y_cordinate << endl;
@@ -106,17 +106,17 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 // 특정 스팟 1개로 주행하는 함수이다
 // 파라미터: 목적지 스팟 좌표
 bool Navigation::moveToGoal(double xGoal, double yGoal) {
-	//define a client for to send goal requests to the move_base server through a SimpleActionClient
+	// define a client for to send goal requests to the move_base server through a SimpleActionClient
 	actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("move_base", true);
-	//wait for the action server to come up
+	// wait for the action server to come up
 	while (!ac.waitForServer(ros::Duration(5.0))) {
 		ROS_INFO("Waiting for the move_base action server to come up");
 	}
 	move_base_msgs::MoveBaseGoal goal;
-	//set up the frame parameters
+	// set up the frame parameters
 	goal.target_pose.header.frame_id = "map";
 	goal.target_pose.header.stamp = ros::Time::now();
-	//목적지로 주행
+	// 목적지로 주행
 	goal.target_pose.pose.position.x = xGoal;
 	goal.target_pose.pose.position.y = yGoal;
 	goal.target_pose.pose.position.z = 0.0;
@@ -177,7 +177,7 @@ int Subscriber::getMsg() {
 int main(int argc, char** argv) { // 노드 메인 함수
 	ros::init(argc, argv, "mode2_node"); // 노드명 선언
 	ros::NodeHandle nh; // ROS 시스템과 통신을 위한 노드핸들 선언
-	double x, y;
+	double x, y; // 목적지 스팟의 좌표
 	bool goalReached; // 목적지 도착 성공여부
 	int current_data; // 현재 미세먼지 데이터
 	int mode_data = 0; // 현재 선택된 모드
