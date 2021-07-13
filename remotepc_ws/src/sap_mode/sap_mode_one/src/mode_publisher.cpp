@@ -8,7 +8,7 @@ Environment : Ubuntu 16.04 / ROS kinetic
 Revisions : 1.0.0 21/08/01 First release
 ***************************************************************/
 
-#include "ros/ros.h"// ROS 기본 헤더 파일
+#include "ros/ros.h"// ROS 기본헤더파일
 #include "sap_mode_one/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
 
 //함수 선언
@@ -17,11 +17,11 @@ char choose();
 int main(int argc, char **argv) // 노드 메인 함수
 {
 	ros::init(argc, argv, "mode_publisher"); // 노드명 초기화
-	ros::NodeHandle n;// ROS 시스템과 통신을 위한 노드 핸들 선언
+	ros::NodeHandle n;// ROS 시스템과 통신을 위한 노드핸들 선언
 	ros::Publisher mode_pub= n.advertise<sap_mode_one::mode_msg>("mode_msg", 100);
 	// 루프주기를 설정한다. "10" 이라는것은 10Hz를말하는것으로 0.1초간격으로 반복된다
 	ros::Rate loop_rate(10);
-	// mode_msg메시지파일형식으로 msg라는 메시지를선언
+	// mode_msg메시지파일형식으로 msg라는 메시지를 선언
 	sap_mode_one::mode_msg msg;
 	
 	// 메시지에 사용될 변수 선언
