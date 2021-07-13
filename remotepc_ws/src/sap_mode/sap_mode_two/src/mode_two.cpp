@@ -179,9 +179,9 @@ int main(int argc, char** argv) { // 노드 메인 함수
 	ros::NodeHandle nh; // ROS 시스템과 통신을 위한 노드핸들 선언
 	double x, y;
 	bool goalReached; // 목적지 도착 성공여부
-	int current_data; //현재 미세먼지 데이터
+	int current_data; // 현재 미세먼지 데이터
 	int mode_data = 0; // 현재 선택된 모드
-	SpotInfo spot[4]; //스팟 정보를 담는 배열
+	SpotInfo spot[4]; // 스팟 정보를 담는 배열
 	SpotInfo *p, *current_p;
 	Mode mode(nh);
 	Navigation navigation;
@@ -189,7 +189,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 
 	while (true) {
 		ros::spinOnce();
-		// 사용자로부터 모드 선택을 받는다.
+		// 사용자로부터 모드 선택을 받는다
 		ros::Duration(1).sleep();
 		mode_data = mode.getMode(); // 현재 선택된 모드를 mode_data에 저장
 		ROS_INFO("mode= %d", mode_data); // 현재 선택된 모드를 표시한다
@@ -203,9 +203,9 @@ int main(int argc, char** argv) { // 노드 메인 함수
 				y = p->y_cordinate;
 				cout << "go to x :" << x << ", y :" << y << endl;
 				goalReached = navigation.moveToGoal(x, y);
-				if (goalReached) { //목적지에 성공적으로 도착했을 경우
+				if (goalReached) { // 목적지에 성공적으로 도착했을 경우
 					ROS_INFO("Congratulations!");
-					//ros::Duration(10).sleep(); //안정적인 수치 반영을 위해서 10초동안 duration을 갖는다
+					//ros::Duration(10).sleep(); // 안정적인 수치 반영을 위해서 10초동안 duration을 갖는다
 					ros::spinOnce(); // 버퍼에 있는 미세먼지 데이터를 받는다
 					current_data = subscriber.getMsg(); // 제일 최근 미세먼지 데이터를 current_data 변수에 넣는다
 					ROS_INFO("current_data : %d", current_data); // 현재 미세먼지 데이터를 출력한다
