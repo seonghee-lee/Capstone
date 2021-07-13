@@ -73,7 +73,7 @@ int main(int argc, char** argv){ // 노드 메인 함수
 	
 	while(true){
 		ros::spinOnce();
-		// 사용자로부터 모드 선택을 받는다.
+		// 사용자로부터 모드 선택을 받는다
 		ros::Duration(1).sleep();
 		mode_data= mode.getMode(); // 현재 선택된 모드를 mode_data에 저장
 		ROS_INFO("mode= %d", mode_data); // 현재 선택된 모드를 표시한다
@@ -112,17 +112,17 @@ int main(int argc, char** argv){ // 노드 메인 함수
 // 특정 스팟 1개로 주행하는 함수이다
 // 파라미터: 목적지 스팟 좌표
 bool moveToGoal(double xGoal, double yGoal){
-	//define a client for to send goal requests to the move_base server through a SimpleActionClient
+	// define a client for to send goal requests to the move_base server through a SimpleActionClient
 	actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("move_base", true);
-	//wait for the action server to come up
+	// wait for the action server to come up
 	while(!ac.waitForServer(ros::Duration(5.0))){
 		ROS_INFO("Waiting for the move_base action server to come up");
 	}
 	move_base_msgs::MoveBaseGoal goal;
-	//set up the frame parameters
+	// set up the frame parameters
 	goal.target_pose.header.frame_id ="map";
 	goal.target_pose.header.stamp = ros::Time::now();
-	//목적지로 주행
+	// 목적지로 주행
 	goal.target_pose.pose.position.x =  xGoal;
 	goal.target_pose.pose.position.y =  yGoal;
 	goal.target_pose.pose.position.z =  0.0;
