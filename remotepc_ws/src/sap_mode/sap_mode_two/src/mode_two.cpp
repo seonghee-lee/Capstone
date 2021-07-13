@@ -2,7 +2,7 @@
 Program : mode_two
 File : mode_two.cpp
 Function : Subscriber
-Description : 전체스팟 데이터 측정 모드
+Description : 전체 스팟 데이터 측정 모드
 Author : SAP Possible
 Environment : Ubuntu 16.04 / ROS kinetic
 Revisions : 1.0.0 21/08/01 First release
