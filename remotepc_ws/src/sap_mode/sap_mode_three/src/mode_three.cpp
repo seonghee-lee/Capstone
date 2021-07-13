@@ -31,7 +31,7 @@ struct SpotInfo {
 	double y_cordinate; // y좌표
 	int status; // 스팟의 미세먼지 상태
 	int dust_data; // 스팟의 미세먼지 수치
-	//int init_order;
+	int init_order;
 };
 
 // 정렬 함수: 미세먼지 수치를 기준으로 내림차순 정렬한다.
@@ -68,7 +68,7 @@ Mode::~Mode() {}
 
 // 메시지콜백함수로써, 밑에서설정 msg라는 이름의 토픽
 // 메시지를 수신하였을때 동작하는 함수이다
-// 입력메시지로는 sap_mode_two패키지의 mode_msg메시지를 받도록 되어있다
+// 입력메시지로는 sap_mode_three패키지의 mode_msg메시지를 받도록 되어있다
 void Mode::modeMsgCallback(const sap_mode_three::mode_msg::ConstPtr &m_msg) {
 	ROS_INFO("Received data: %d", m_msg->data);
 	mode_data = m_msg->data;
@@ -94,9 +94,9 @@ Navigation::Navigation() {}
 //Destructor
 Navigation::~Navigation() {}
 
-// 모의 환경에서 사용하는 좌표 정보를 하는 함수이다
+// 모의 환경에서 사용하는 좌표 정보를 설정하는 함수이다
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
-	//스팟의 상태와 미세먼지 수치를 0으로 초기화한다.
+	//스팟의 상태와 미세먼지 수치를 0으로 초기화한다
 	for (int i = 0; i < 4; i++) {
 		current->status = 0;
 		current->dust_data = 0;
@@ -117,7 +117,7 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 	current->x_cordinate = 0.3837;
 	current->y_cordinate = -0.0119;
 	
-	//모든 좌표의 상태를 출력한다.
+	//모든 좌표의 상태를 출력한다
 	for (int i = 0; i < 4; i++) {
 		cout << "spot[" << i << "].x_cordinate : " << arr_p->x_cordinate << endl;
 		cout << "spot[" << i << "].y_cordinate : " << arr_p->y_cordinate << endl;
@@ -191,7 +191,7 @@ void Subscriber::msgCallback(const sap_mode_three::Msg::ConstPtr &msg) { // 라�
 	current_data = msg->pmsdata; // current_data 변수에 현재 미세먼지 데이터를 저장한다
 }
 
-//현재 미세먼지 데이터를 반환하는 함수이다
+// 현재 미세먼지 데이터를 반환하는 함수이다
 int Subscriber::getMsg() {
 	return current_data;
 }
@@ -215,7 +215,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 
 	while (true) {
 		ros::spinOnce();
-    // 사용자로부터 모드 선택을 받는다
+		// 사용자로부터 모드 선택을 받는다
 		ros::Duration(1).sleep();
 
 		mode_data = mode.getMode(); // 현재 선택된 모드를 mode_data에 저장
@@ -255,21 +255,21 @@ int main(int argc, char** argv) { // 노드 메인 함수
 				y = p->y_cordinate;
 				cout << "go to x :" << x << ", y :" << y << endl;
 				goalReached = navigation.moveToGoal(x, y);
-				if (goalReached)  {// 목적지에 성공적으로 도착했을 경우
+				if (goalReached)  { // 목적지에 성공적으로 도착했을 경우
 					ROS_INFO("Congratulations!");
 					//ros::Duration(10).sleep(); // 안정적인 수치 반영을 위해서 10초동안 duration을 갖는다
 					for (int j = 0; j < 15; j++) { // 스팟 내에서 미세먼지 데이터 15개를 배열 arr[]에 저장한다
 						ros::spinOnce(); // 버퍼에 있는 미세먼지 데이터를 받는다
-						current_data = subscriber.getMsg();	 // 제일 최근 미세먼지 데이터를 current_data 변수에 넣는다
+						current_data = subscriber.getMsg();  // 제일 최근 미세먼지 데이터를 current_data 변수에 넣는다
 						ROS_INFO("current_data : %d", current_data); // 현재 미세먼지 데이터를 출력한다
 						arr[j] = current_data;	// 배열에 저장한다
-						usleep(1000000);	// 1초 delay
+						usleep(1000000); // 1초 delay
 					}
 					for (int j = 0; j < 15; j++) {
 						sum = sum + arr[j];
 					}
 					avg = sum / 15;	// 배열에 담겨있는 데이터의 평균을 구한다
-					current_p->dust_data = avg;	// 평균값을 구조체에 해당 스팟의 dust_data에 저장한다
+					current_p->dust_data = avg; // 평균값을 구조체에 해당 스팟의 dust_data에 저장한다
 					ROS_INFO("AVG: %d", current_p->dust_data); // 평균값 출력
 					
 					/////////////////////////////////database insert////////////////////////////////
@@ -305,7 +305,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 			y = p->y_cordinate;	
 			cout << "go to x :" << x << ", y :" << y << endl;
 			cout << "to the highest data : " << p->dust_data << endl;
-			goalReached = navigation.moveToGoal(x, y); // 최고 미세먼지 수치 스팟으로 이동한다.      
+			goalReached = navigation.moveToGoal(x, y); // 최고 미세먼지 수치 스팟으로 이동한다
 			if (goalReached) { // 목적지에 성공적으로 도착했을 경우
 				ROS_INFO("Congratulations!");
 				ROS_INFO("~Purifying~");
