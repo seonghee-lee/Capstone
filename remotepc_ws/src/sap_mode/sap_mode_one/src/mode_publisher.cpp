@@ -14,8 +14,8 @@ Revisions : 1.0.0 21/08/01 First release
 //함수 선언
 char choose();
 
-int main(int argc, char **argv) // 노드 메인 함수
-{
+int main(int argc, char **argv) { // 노드 메인 함수
+
 	ros::init(argc, argv, "mode_publisher"); // 노드명 선언
 	ros::NodeHandle n; // ROS 시스템과 통신을 위한 노드핸들 선언
 	ros::Publisher mode_pub= n.advertise<sap_mode_one::mode_msg>("mode_msg", 100);
