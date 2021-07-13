@@ -13,39 +13,42 @@ Revisions : 1.0.0 21/08/01 First release
 #include <actionlib/client/simple_action_client.h>
 #include "sap_mode_one/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
 
-//함수 선언
+// 함수 선언
 bool moveToGoal(double xGoal, double yGoal);
 char choose();
 
-//모의 환경에서 사용하는 좌표 정보
-double xspot0=-1.2496;
-double yspot0=-3.395;
-double xspot1=-0.8941;
-double yspot1=-0.5606;
-double xspot2=0.0365;
-double yspot2=-1.8533;
-double xspot3=0.3837;
-double yspot3=-0.0119;
+// 모의 환경에서 사용하는 좌표 정보
+double xspot0 = -1.2496;
+double yspot0 = -3.395;
+double xspot1 = -0.8941;
+double yspot1 = -0.5606;
+double xspot2 = 0.0365;
+double yspot2 = -1.8533;
+double xspot3 = 0.3837;
+double yspot3 = -0.0119;
+
+// 목적지 도착 성공여부
 bool goalReached=false;
 
+// 사용자 선택 모드를 Subscribe하기 위한 클래스
 class Mode{
 private:
-    ros::NodeHandle n;
-    ros::Subscriber mode_sub;
-    int mode_data;
+	ros::NodeHandle n;
+	ros::Subscriber mode_sub;
+	int mode_data;
 public:
-    Mode(ros::NodeHandle n);
-    ~Mode();
-    void modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr& msg);
-    int getMode();
+	Mode(ros::NodeHandle n);
+	~Mode();
+	void modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr& msg);
+	int getMode();
 };
 
-//Constructor
+// Constructor
 Mode::Mode(ros::NodeHandle nh):n(nh){
     mode_sub = n.subscribe("mode_msg", 100, &Mode::modeMsgCallback, this);
 }
 
-//Destructor
+// Destructor
 Mode::~Mode(){}
 
 // 메시지콜백함수로써, 밑에서설정 msg라는 이름의 토픽
@@ -55,13 +58,15 @@ void Mode::modeMsgCallback(const sap_mode_one::mode_msg::ConstPtr &msg) {
         ROS_INFO("Received data: %d", msg->data);
         mode_data=msg->data;
 }
+
+// 현재 선택된 모드를 반환하는 함수이다
 int Mode::getMode(){
     return mode_data;
 }
 
 int main(int argc, char** argv){ // 노드 메인 함수
-	ros::init(argc, argv, "mode1_node");// 노드명 초기화
-	ros::NodeHandle nh;// ROS 시스템과 통신을 위한 노드핸들 선언
+	ros::init(argc, argv, "mode1_node"); // 노드명 선언
+	ros::NodeHandle nh; // ROS 시스템과 통신을 위한 노드핸들 선언
 	int mode_data; // 현재 선택된 모드
 	char choice='q'; // 목적지 스팟
 	Mode mode(nh);
@@ -72,20 +77,22 @@ int main(int argc, char** argv){ // 노드 메인 함수
 		ros::Duration(1).sleep();
 		mode_data= mode.getMode(); // 현재 선택된 모드를 mode_data에 저장
 		ROS_INFO("mode= %d", mode_data); // 현재 선택된 모드를 표시한다
+		
 		if(mode_data==1){
-		    choice=choose();
-		    if(choice=='0'){ // 0번 스팟으로 이동
+			choice=choose();
+			
+			if(choice=='0'){ // 0번 스팟으로 이동
 				goalReached=moveToGoal(xspot0,yspot0);
-		    }
-		    else if(choice=='1'){ // 1번 스팟으로 이동
+			}
+			else if(choice=='1'){ // 1번 스팟으로 이동
 				goalReached=moveToGoal(xspot1,yspot1);
-		    }
-		    else if(choice=='2'){ // 2번 스팟으로 이동
+			}
+			else if(choice=='2'){ // 2번 스팟으로 이동
 				goalReached=moveToGoal(xspot2,yspot2);
-		    }
-		    else if(choice=='3'){ // 3번 스팟으로 이동
+			}
+			else if(choice=='3'){ // 3번 스팟으로 이동
 				goalReached=moveToGoal(xspot3,yspot3);
-		    }
+			}
 		    if(choice!='q'){
 				if(goalReached){ // 목적지 스팟에 도착했으면 Congratulations! 출력
 					ROS_INFO("Congratulations!");
@@ -101,10 +108,10 @@ int main(int argc, char** argv){ // 노드 메인 함수
 	return 0;
 }
 
-// 특정 스팟 1개로 주행하는 함수이다.
+// 특정 스팟 1개로 주행하는 함수이다
 // 파라미터: 목적지 스팟 좌표
 bool moveToGoal(double xGoal, double yGoal){
-//define a client for to send goal requests to the move_base server through a SimpleActionClient
+	//define a client for to send goal requests to the move_base server through a SimpleActionClient
 	actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("move_base", true);
 	//wait for the action server to come up
 	while(!ac.waitForServer(ros::Duration(5.0))){
@@ -135,7 +142,7 @@ bool moveToGoal(double xGoal, double yGoal){
 	}
 }
 
-// 사용자가 목적지 스팟을 선택하는 함수이다.
+// 사용자가 목적지 스팟을 선택하는 함수이다
 char choose(){
 	char choice='q';
 	std::cout<<"|-------------------------------|"<<std::endl;
