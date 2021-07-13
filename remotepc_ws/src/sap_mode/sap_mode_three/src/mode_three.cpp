@@ -128,17 +128,17 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 // 특정 스팟 1개로 주행하는 함수이다
 // 파라미터: 목적지 스팟 좌표
 bool Navigation::moveToGoal(double xGoal, double yGoal) {
-	//define a client for to send goal requests to the move_base server through a SimpleActionClient
+	// define a client for to send goal requests to the move_base server through a SimpleActionClient
 	actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ac("move_base", true);
-	//wait for the action server to come up
+	// wait for the action server to come up
 	while (!ac.waitForServer(ros::Duration(5.0))) {
 		ROS_INFO("Waiting for the move_base action server to come up");
 	}
 	move_base_msgs::MoveBaseGoal goal;
-	//set up the frame parameters
+	// set up the frame parameters
 	goal.target_pose.header.frame_id = "map";
 	goal.target_pose.header.stamp = ros::Time::now();
-	//목적지로 주행
+	// 목적지로 주행
 	goal.target_pose.pose.position.x = xGoal;
 	goal.target_pose.pose.position.y = yGoal;
 	goal.target_pose.pose.position.z = 0.0;
@@ -202,7 +202,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 	bool goalReached; // 목적지 도착 성공여부
 	int current_data; // 현재 미세먼지 데이터
 	int mode_data = 0; // 현재 선택된 모드
-	double x, y; 	// 최고 미세먼지 수치 스팟의 좌표
+	double x, y; // 스팟의 좌표
 	int loop_time = 0;
 	int arr[15]; // 미세먼지 수치 값 평균 구하기 위한 배열
 	int sum = 0; //미세먼지 수치 값 평균 구하기 위한 합
