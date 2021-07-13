@@ -9,9 +9,9 @@ Revisions : 1.0.0 21/08/01 First release
 ***************************************************************/
 
 #include <ros/ros.h> // ROS 기본헤더파일
-#include "sap_mode_one/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
+#include "sap_mode_one/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
 
 //함수 선언
 bool moveToGoal(double xGoal, double yGoal);
