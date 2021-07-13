@@ -266,7 +266,6 @@ int main(int argc, char** argv) {
 				ROS_INFO("Query Error: %s", mysql_error(connection));
 				exit(1);
 			}
-
 			else {
 				result = mysql_use_result(connection);
 				for (int i = 0; i < mysql_field_count(connection); ++i) {
@@ -307,8 +306,8 @@ int main(int argc, char** argv) {
 					current_p->dust_data = avg; // 평균값을 구조체에 해당 스팟의 dust_data에 저장한다
 					navigation.inputStatus(current_p); // 구조체에 해당 스팟의 상태를 저장한다
 					ROS_INFO("AVG: %d", current_p->dust_data); // 평균값 출력
-          
-          /////////////////////////////////database insert////////////////////////////////
+					
+					/////////////////////////////////database insert////////////////////////////////
 					std::string query = "INSERT INTO test_table (spot, pmsdata, date) VALUES ('" + to_string(i) + "', '" + to_string(avg) + "', NOW());";
 					mysql_query(connection, query.c_str());
 					////////////////////////////////////////////////////////////////////////////////
