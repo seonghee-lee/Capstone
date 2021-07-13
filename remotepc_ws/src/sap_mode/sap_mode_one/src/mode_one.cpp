@@ -96,6 +96,7 @@ int main(int argc, char** argv){ // 노드 메인 함수
 		    if(choice!='q'){
 				if(goalReached){ // 목적지 스팟에 도착했으면 Congratulations! 출력
 					ROS_INFO("Congratulations!");
+					ROS_INFO("~Purifying~");
 					ros::spinOnce();	
 				}
 				else{
