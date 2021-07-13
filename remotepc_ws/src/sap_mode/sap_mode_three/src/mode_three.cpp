@@ -9,7 +9,7 @@ Revisions : 1.0.0 21/08/01 First release
 ***************************************************************/
 
 #include <iostream>
-#include <ros/ros.h>  // ROS 기본헤더파일
+#include <ros/ros.h> // ROS 기본헤더파일
 #include <mysql/mysql.h>
 #include <string>
 #include <move_base_msgs/MoveBaseAction.h>
@@ -17,7 +17,7 @@ Revisions : 1.0.0 21/08/01 First release
 #include <unistd.h>
 #include <algorithm>
 #include "std_msgs/String.h"
-#include "sap_mode_three/Msg.h"  // Msg메시지파일헤더(빌드후자동생성됨)
+#include "sap_mode_three/Msg.h" // Msg메시지파일헤더(빌드후자동생성됨)
 #include "sap_mode_three/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
 using namespace std;
 
@@ -58,12 +58,12 @@ public:
 	int getMode();
 };
 
-//Constructor
+// Constructor
 Mode::Mode(ros::NodeHandle nh) :n(nh) {
 	mode_sub = n.subscribe("mode_msg", 10, &Mode::modeMsgCallback, this);
 }
 
-//Destructor
+// Destructor
 Mode::~Mode() {}
 
 // 메시지콜백함수로써, 밑에서설정 msg라는 이름의 토픽
@@ -88,15 +88,15 @@ public:
 	bool moveToGoal(double xGoal, double yGoal);
 };
 
-//Constructor
+// Constructor
 Navigation::Navigation() {}
 
-//Destructor
+// Destructor
 Navigation::~Navigation() {}
 
 // 모의 환경에서 사용하는 좌표 정보를 설정하는 함수이다
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
-	//스팟의 상태와 미세먼지 수치를 0으로 초기화한다
+	// 스팟의 상태와 미세먼지 수치를 0으로 초기화한다
 	for (int i = 0; i < 4; i++) {
 		current->status = 0;
 		current->dust_data = 0;
@@ -104,7 +104,7 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 	}
 	current = arr_p;
 
-	// x,y의 실좌표를 설정한다
+	// x, y의 실좌표를 설정한다
 	current->x_cordinate = -1.2496;
 	current->y_cordinate = -3.395;
 	current++;
@@ -117,7 +117,7 @@ void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 	current->x_cordinate = 0.3837;
 	current->y_cordinate = -0.0119;
 	
-	//모든 좌표의 상태를 출력한다
+	// 모든 좌표의 상태를 출력한다
 	for (int i = 0; i < 4; i++) {
 		cout << "spot[" << i << "].x_cordinate : " << arr_p->x_cordinate << endl;
 		cout << "spot[" << i << "].y_cordinate : " << arr_p->y_cordinate << endl;
@@ -162,7 +162,7 @@ bool Navigation::moveToGoal(double xGoal, double yGoal) {
 	}
 }
 
-//미세먼지 데이터를 Subscribe하기 위한 클래스
+// 미세먼지 데이터를 Subscribe하기 위한 클래스
 class Subscriber {
 private:
 	ros::NodeHandle n;
@@ -175,12 +175,12 @@ public:
 	int getMsg();
 };
 
-//Constructor
+// Constructor
 Subscriber::Subscriber(ros::NodeHandle nh) :n(nh) {
 	sub = n.subscribe("pmsdata", 10, &Subscriber::msgCallback, this);
 }
 
-//Destructor
+// Destructor
 Subscriber::~Subscriber() {}
 
 // 메시지콜백함수로써, 밑에서설정 msg라는 이름의 토픽
@@ -279,16 +279,16 @@ int main(int argc, char** argv) { // 노드 메인 함수
 
 					sum = 0; // 미세먼지 수치 값 합 초기화
 				}
-				else{ //도착 실패했을 경우
+				else{ // 도착 실패했을 경우
 					ROS_INFO("Hard Luck!");
 				}
 			}
-			//미세먼지 수치를 바탕으로 정렬한다
+			// 미세먼지 수치를 바탕으로 정렬한다
 			sort(p, p + 4, compare);
 			
 			//////////////////////////////////sorting check/////////////////////////////////
 			
-			//정렬이 성공적으로 되었는지 확인한다.
+			// 정렬이 성공적으로 되었는지 확인한다.
 			current_p = p;
 
 			for (int i = 0; i < 4; i++, current_p++) {
@@ -311,7 +311,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 				ROS_INFO("~Purifying~");
 				ros::Duration(10).sleep(); // 10초 정화
 			}
-			else{ //도착 실패했을 경우
+			else{ // 도착 실패했을 경우
 				ROS_INFO("Hard Luck!");
 			}
 	}
