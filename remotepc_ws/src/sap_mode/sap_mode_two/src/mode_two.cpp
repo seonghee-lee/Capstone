@@ -174,7 +174,7 @@ int main(int argc, char** argv) {
 			//목적지에 성공적으로 도착했을 경우
             if (goalReached) {
                 ROS_INFO("Congratulations!");
-                ros::Duration(10).sleep();	//안정적인 수치 반영을 위해서 10초동안 duration을 갖는다.
+                //ros::Duration(10).sleep();	//안정적인 수치 반영을 위해서 10초동안 duration을 갖는다.
                 ros::spinOnce();	//버퍼에 있는 미세먼지 데이터를 받는다.
                 current_data=subscriber.getMsg();	//제일 최근 미세먼지 데이터를 current_data 변수에 넣는다.
                 ROS_INFO("current_data : %d", current_data);	//현재 미세먼지 데이터를 출력한다.
