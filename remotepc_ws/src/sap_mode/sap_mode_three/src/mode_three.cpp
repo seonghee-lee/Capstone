@@ -314,6 +314,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 			else{ // 도착 실패했을 경우
 				ROS_INFO("Hard Luck!");
 			}
+		}
 	}
 
 	return 0;
