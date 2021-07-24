@@ -17,8 +17,8 @@ Revisions : 1.0.0 21/08/01 First release
 #include <unistd.h>
 #include <algorithm>
 #include "std_msgs/String.h"
-#include "sap_mode_four/Msg.h" // Msg메시지파일헤더(빌드후자동생성됨)
-#include "sap_mode_four/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
+#include "sap_mode_five/Msg.h" // Msg메시지파일헤더(빌드후자동생성됨)
+#include "sap_mode_five/mode_msg.h" // mode_msg메시지파일헤더(빌드후자동생성됨)
 using namespace std;
 
 MYSQL *connection = NULL;
@@ -67,7 +67,7 @@ private:
 public:
 	Mode(ros::NodeHandle n);
 	~Mode();
-	void modeMsgCallback(const sap_mode_four::mode_msg::ConstPtr& m_msg);
+	void modeMsgCallback(const sap_mode_five::mode_msg::ConstPtr& m_msg);
 	int getMode();
 };
 
