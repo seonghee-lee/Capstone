@@ -98,7 +98,7 @@ Navigation::~Navigation() {}
 void Navigation::setSpot(SpotInfo* arr_p, SpotInfo* current) {
 	// 스팟의 상태와 미세먼지 수치를 0으로 초기화한다
 	for (int i = 0; i < 4; i++) {
-		current->status = 0;
+		// current->status = 0;
 		current->dust_data = 0;
 		current++;
 	}
@@ -293,6 +293,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 
 			for (int i = 0; i < 4; i++, current_p++) {
 				cout << "----sorting print----" << endl;
+				cout<<"spot["<<current_p->init_order<<"]"<<endl;
 				cout << "x: " << current_p->x_cordinate << endl;
 				cout << "y: " << current_p->y_cordinate << endl;
 				cout << "dust: " << current_p->dust_data << endl;
