@@ -48,7 +48,7 @@ bool compare(const SpotInfo &p1, const SpotInfo &p2) {
 // 사용자 선택 모드를 Subscribe하기 위한 클래스
 class Mode {
 private:
-  ros::NodeHandle n;
+	ros::NodeHandle n;
 	ros::Subscriber mode_sub;
 	int mode_data = 0;
 public:
@@ -328,6 +328,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 
 			for (int i = 0; i < 4; i++, current_p++) {
 				cout << "----sorting print----" << endl;
+				cout<<"spot["<<current_p->init_order<<"]"<<endl;
 				cout << "x: " << current_p->x_cordinate << endl;
 				cout << "y: " << current_p->y_cordinate << endl;
 				cout << "dust: " << current_p->dust_data << endl;
