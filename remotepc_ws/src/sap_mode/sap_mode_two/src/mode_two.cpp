@@ -21,6 +21,7 @@ struct SpotInfo {
 	double y_cordinate; // y좌표
 	int status; // 스팟의 미세먼지 상태
 	int dust_data; // 스팟의 미세먼지 수치
+	int init_order;
 };
 
 // 사용자 선택 모드를 Subscribe하기 위한 클래스
