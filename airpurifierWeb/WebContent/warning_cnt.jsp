@@ -55,7 +55,7 @@ body {
 
 
 <%@ include file="dbconn.jsp"%>
-<%@ include file = "./header.jsp" %>
+<%@ include file="./header.jsp"%>
 
 <%!String spot0;
 	String spot1;
@@ -145,7 +145,6 @@ try {
 <body>
 
 	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/variable-pie.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -164,7 +163,7 @@ try {
 					chart : {
 						backgroundColor : 'white'
 					},
-					colors : [ '#F62366', '#9DFF02', '#0CCDD6','#EE82EE' ],
+					colors : [ '#F62366', '#9DFF02', '#0CCDD6', '#EE82EE' ],
 					title : {
 						style : {
 							color : 'gray'
@@ -179,45 +178,39 @@ try {
 			}
 			// 차트 그리기 시작
 
-			Highcharts
-					.chart(
-							'container',
-							{
-								chart : {
-									type : 'variablepie'
-								},
-								title : {
-									text : ' [ 미세먼지 수치 현황 ] '
-								},
-								tooltip : {
-									headerFormat : '',
-									pointFormat : '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>'
-											+ '<b>{point.z}</b>회'
-								},
-								series : [ {
-									minPointSize : 10,
-									innerSize : '20%',
-									zMin : 0,
-									name : 'spots',
-									data: [{
-						                name: 'SPOT 0',
-						                y: 1,
-						                z: <%= Float.parseFloat(pmsdata0) %>
-						            }, {
-						                name: 'SPOT 1',
-						                y: 1,
-						                z: <%= Float.parseFloat(pmsdata1) %>
-						            }, {
-						                name: 'SPOT 2',
-						                y: 1,
-						                z: <%= Float.parseFloat(pmsdata2) %>
-						            }, {
-						                name: 'SPOT 3',
-						                y: 1,
-						                z: <%= Float.parseFloat(pmsdata3) %>
-						            }]
-						        }]
-						    });
+			Highcharts.chart('container',{
+				chart : { type : 'pie'},
+				title : { text : ' [ 미세먼지 수치 현황 ] '},
+				tooltip : { headerFormat : '',
+							pointFormat : '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' + '<b>{point.y}</b>회'},
+				series : [ {
+							minPointSize : 10,
+							innerSize : '20%',
+							name : 'spots',
+							data : [ {
+										name : 'SPOT 0',
+										y :<%=Float.parseFloat(pmsdata0)%>
+									  }, 
+									  
+										
+									{
+										name : 'SPOT 1',
+										y :<%=Float.parseFloat(pmsdata1)%>
+									  },
+									  
+										
+									{
+										name : 'SPOT 2',
+										y :<%=Float.parseFloat(pmsdata2)%>
+									  },
+									
+									{
+										name : 'SPOT 3',
+										y :<%=Float.parseFloat(pmsdata3)%>
+									  } ]
+				
+							} ]
+					});
 		</script>
 	</figure>
 
