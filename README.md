@@ -28,21 +28,21 @@ Smart autonomous moving air purifier
 
 
 # System Scenario
-![image](https://user-images.githubusercontent.com/74324866/123063076-0dd92300-d448-11eb-83b4-033a072a2d5e.png)
+![image](https://user-images.githubusercontent.com/74324866/131114380-c9c460d2-1100-403e-a30c-e62a5bb5f7b4.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063101-16315e00-d448-11eb-9e9e-4b1ae749cbea.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063397-542e8200-d448-11eb-8eab-8ec03b3ee6a2.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063212-29442e00-d448-11eb-8b4a-687ef40e908c.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063230-2e08e200-d448-11eb-9c84-ebcf082c6393.png)
 ![image](https://user-images.githubusercontent.com/74324866/123063275-37924a00-d448-11eb-8306-0fa3b2ef4b40.png)
 
-# 시스템 구성도
-![그림1](https://user-images.githubusercontent.com/74324866/123063887-c1421780-d448-11eb-9c23-baa9f1f4f439.png)
-
 # Hardware
-![HW](https://user-images.githubusercontent.com/74324866/112432150-cfb65f80-8d83-11eb-83c8-93d56ab1d572.png)
+![image](https://user-images.githubusercontent.com/74324866/131114337-1fc78765-a5f1-405a-84cf-5153f0fdf18c.png)
 
 # Map
 <img width="355" alt="map" src="https://user-images.githubusercontent.com/74324866/123063970-d454e780-d448-11eb-9a47-53b7989a6270.png">
+
+# Appearance
+![image](https://user-images.githubusercontent.com/74324866/131114669-9712c776-d88b-4a76-9b3e-3cf7b5712b3c.png)
 
 # License
 이 프로젝트는 한국산업기술대학교 컴퓨터공학부의 “종합설계”교과목에서 프로젝트“스마트 자율주행 공기청정기(Smart Autonomous Moving Air Purifier)”을 수행하는 (S3-3, 임아연, 신효진, 윤지희, 이성희)들이 작성한 것으로 사용하기 위해서는 팀원들의 허락이 필요합니다.
