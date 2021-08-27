@@ -8,10 +8,6 @@
 
 <html>
 <head>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <!-- google font -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
@@ -59,8 +55,100 @@
 </style>
 
 <title>current level</title>
+<%@ include file="dbconn.jsp"%>
 <%@ include file="./header.jsp"%>
+
+<%!String spot0;
+	String spot1;
+	String spot2;
+	String spot3;
+
+	String pmsdata0;
+	String pmsdata1;
+	String pmsdata2;
+	String pmsdata3;%>
+	
+<%
+request.setCharacterEncoding("utf-8");
+
+ResultSet rs1 = null;
+ResultSet rs2 = null;
+ResultSet rs3 = null;
+ResultSet rs4 = null;
+
+Statement stmt1 = null;
+Statement stmt2 = null;
+Statement stmt3 = null;
+Statement stmt4 = null;
+
+try {
+
+	//첫 번째 쿼리문 
+	String sql = "SELECT pmsdata FROM test_table where spot=1 ORDER BY id DESC LIMIT 1";
+	stmt1 = conn.createStatement();
+	rs1 = stmt1.executeQuery(sql);
+
+	while (rs1.next()) {
+
+		pmsdata0 = rs1.getString("pmsdata");
+
+	}
+
+	//2 번째 쿼리문 
+	String sql2 = "SELECT pmsdata FROM test_table where spot=2 ORDER BY id DESC LIMIT 1";
+	stmt2 = conn.createStatement();
+	rs2 = stmt2.executeQuery(sql2);
+
+	while (rs2.next()) {
+
+		pmsdata1 = rs2.getString("pmsdata");
+
+	}
+
+	//3 번째 쿼리문 
+	String sql3 = "SELECT pmsdata FROM test_table where spot=3 ORDER BY id DESC LIMIT 1";
+	stmt3 = conn.createStatement();
+	rs3 = stmt3.executeQuery(sql3);
+
+	while (rs3.next()) {
+
+		pmsdata2 = rs3.getString("pmsdata");
+
+	}
+
+	//4 번째 쿼리문 
+	String sql4 = "SELECT pmsdata FROM test_table where spot=4 ORDER BY id DESC LIMIT 1";
+	stmt4 = conn.createStatement();
+	rs4 = stmt4.executeQuery(sql4);
+
+	while (rs4.next()) {
+
+		pmsdata3 = rs4.getString("pmsdata");
+
+	}
+
+} catch (SQLException ex) {
+	out.println("SQLException: " + ex.getMessage());
+
+} finally {
+
+	if (rs1 != null)
+		rs1.close();
+	if (stmt1 != null)
+		stmt1.close();
+	if (conn != null)
+		conn.close();
+
+}
+%>
+
 </head>
+
+<body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <figure class="highcharts-figure">
     <div id="container"></div>
@@ -76,23 +164,23 @@
         </thead>
         <tbody>
             <tr>
+                <th>SPOT 0</th>
+                <td><%=pmsdata0%></td>
+                
+            </tr>
+            <tr>
                 <th>SPOT 1</th>
-                <td>520</td>
+                <td><%=pmsdata1%></td>
                 
             </tr>
             <tr>
                 <th>SPOT 2</th>
-                <td>128</td>
+                <td><%=pmsdata2%></td>
                 
             </tr>
             <tr>
                 <th>SPOT 3</th>
-                <td>1270</td>
-                
-            </tr>
-            <tr>
-                <th>SPOT 4</th>
-                <td>812</td>
+                <td><%=pmsdata3%></td>
                 
             </tr>
         </tbody>
@@ -126,6 +214,9 @@
         }
     });
 </script>
+
+</body>
+
 
 </html>
 
