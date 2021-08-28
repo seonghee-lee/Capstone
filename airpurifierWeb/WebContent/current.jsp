@@ -191,28 +191,36 @@ try {
 
 <script type="text/javascript">
     Highcharts.chart('container', {
-        data: {
-            table: 'datatable'
-        },
         chart: {
             type: 'column'
         },
         title: {
             text: '현재 구역 별 미세먼지 수치'
         },
+        xAxis: {
+            categories: ['SPOT 0','SPOT 1','SPOT 2','SPOT 3']
+        },
         yAxis: {
-            allowDecimals: false,
+
             title: {
                 text: '미세먼지 수치 '
             }
         },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    this.point.y + ' ' + this.point.name.toLowerCase();
+        plotOptions: {
+            series: {
+                allowPointSelect: true
             }
-        }
+        },
+        series : [ {
+        	name : '미세먼지 수치',
+			data : [<%=Float.parseFloat(pmsdata0)%>,
+					<%=Float.parseFloat(pmsdata1)%>,
+					<%=Float.parseFloat(pmsdata2)%>,
+					<%=Float.parseFloat(pmsdata3)%>]
+		}]
+
     });
+
 </script>
 
 </body>
