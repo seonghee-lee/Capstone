@@ -185,7 +185,7 @@ try {
             }
         },
         series : [ {
-        	name : '미세먼지 수치',
+        	name : '현재 미세먼지 수치',
 			data : [<%=Float.parseFloat(pmsdata[0])%>,
 				<%=Float.parseFloat(pmsdata[1])%>,
 				<%=Float.parseFloat(pmsdata[2])%>,
