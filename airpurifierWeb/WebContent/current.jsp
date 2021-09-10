@@ -55,99 +55,54 @@
 <%@ include file="dbconn.jsp"%>
 <%@ include file="./header.jsp"%>
 
-<%!String spot0;
-	String spot1;
-	String spot2;
-	String spot3;
+<%!
 
-	String pmsdata0;
-	String pmsdata1;
-	String pmsdata2;
-	String pmsdata3;
-	float average;
-	
-	String date0;
-	String date1;
-	String date2;
-	String date3;%>
+String[] pmsdata = new String[4];
+String[] date = new String[4];
+String[] avg = new String[4];%>
 	
 <%
 request.setCharacterEncoding("utf-8");
 
-ResultSet rs1 = null;
-ResultSet rs2 = null;
-ResultSet rs3 = null;
-ResultSet rs4 = null;
+ResultSet[] r = new ResultSet[4];
+Statement[] s = new Statement[4];
 
-Statement stmt1 = null;
-Statement stmt2 = null;
-Statement stmt3 = null;
-Statement stmt4 = null;
 
 try {
-
-	//첫 번째 쿼리문 
-	String sql = "SELECT pmsdata,date FROM test_table where spot=1 ORDER BY id DESC LIMIT 1";
-	stmt1 = conn.createStatement();
-	rs1 = stmt1.executeQuery(sql);
-
-	while (rs1.next()) {
-
-		pmsdata0 = rs1.getString("pmsdata");
-		date0 = rs1.getString("date");
-		date0 = date0.substring(0, 19);
-
-	}
-
-	//2 번째 쿼리문 
-	String sql2 = "SELECT pmsdata,date FROM test_table where spot=2 ORDER BY id DESC LIMIT 1";
-	stmt2 = conn.createStatement();
-	rs2 = stmt2.executeQuery(sql2);
-
-	while (rs2.next()) {
-
-		pmsdata1 = rs2.getString("pmsdata");
-		date1 = rs2.getString("date");
-		date1 = date1.substring(0, 19);
-	}
-
-	//3 번째 쿼리문 
-	String sql3 = "SELECT pmsdata,date FROM test_table where spot=3 ORDER BY id DESC LIMIT 1";
-	stmt3 = conn.createStatement();
-	rs3 = stmt3.executeQuery(sql3);
-
-	while (rs3.next()) {
-
-		pmsdata2 = rs3.getString("pmsdata");
-		date2 = rs3.getString("date");
-		date2 = date2.substring(0, 19);
-
-	}
-
-	//4 번째 쿼리문 
-	String sql4 = "SELECT pmsdata,date FROM test_table where spot=4 ORDER BY id DESC LIMIT 1";
-	stmt4 = conn.createStatement();
-	rs4 = stmt4.executeQuery(sql4);
-
-	while (rs4.next()) {
-
-		pmsdata3 = rs4.getString("pmsdata");
-		date3 = rs4.getString("date");
-		date3 = date3.substring(0, 19);
-
+	
+	for(int i=0;i<4;i++){
+		String sql = "SELECT pmsdata,date FROM test_table where spot=" + i + " ORDER BY id DESC LIMIT 1";
+		s[i] = conn.createStatement();
+		r[i] = s[i].executeQuery(sql);
+		
+		while(r[i].next()){
+			pmsdata[i] = r[i].getString("pmsdata");
+			date[i] = r[i].getString("date");
+			date[i] = date[i].substring(0, 19);
+		}
 	}
 	
-	average = (Integer.parseInt(pmsdata0)+Integer.parseInt(pmsdata1)+Integer.parseInt(pmsdata2)+Integer.parseInt(pmsdata3))/4;
+	for(int i=0;i<4;i++){
+		String sql = "SELECT round(AVG(pmsdata),1) from test_table where spot="+ i;
+		s[i] = conn.createStatement();
+		r[i] = s[i].executeQuery(sql);
+		
+		while(r[i].next()){
+			avg[i] = r[i].getString("round(AVG(pmsdata),1)");
+		}
+	}
+	
+
 
 } catch (SQLException ex) {
 	out.println("SQLException: " + ex.getMessage());
 
 } finally {
 
-	if (rs1 != null)
-		rs1.close();
-	if (stmt1 != null)
-		stmt1.close();
+	if (r[0] != null)
+		r[0].close();
+	if (s[0] != null)
+		s[0].close();
 	if (conn != null)
 		conn.close();
 
@@ -178,26 +133,27 @@ try {
         <tbody>
             <tr>
                 <th>SPOT 0</th>
-                <td><%=pmsdata0%></td>
-                <td><%=date0%></td>
+                <td><%=pmsdata[0]%></td>
+                <td><%=date[0]%></td>
+            
                 
             </tr>
             <tr>
                 <th>SPOT 1</th>
-                <td><%=pmsdata1%></td>
-                <td><%=date1%></td>
+                <td><%=pmsdata[1]%></td>
+                <td><%=date[1]%></td>
                 
             </tr>
             <tr>
                 <th>SPOT 2</th>
-                <td><%=pmsdata2%></td>
-                <td><%=date2%></td>
+                <td><%=pmsdata[2]%></td>
+                <td><%=date[2]%></td>
                 
             </tr>
             <tr>
                 <th>SPOT 3</th>
-                <td><%=pmsdata3%></td>
-                <td><%=date3%></td>
+                <td><%=pmsdata[3]%></td>
+                <td><%=date[3]%></td>
                 
             </tr>
         </tbody>
@@ -230,16 +186,16 @@ try {
         },
         series : [ {
         	name : '미세먼지 수치',
-			data : [<%=Float.parseFloat(pmsdata0)%>,
-					<%=Float.parseFloat(pmsdata1)%>,
-					<%=Float.parseFloat(pmsdata2)%>,
-					<%=Float.parseFloat(pmsdata3)%>]
+			data : [<%=Float.parseFloat(pmsdata[0])%>,
+				<%=Float.parseFloat(pmsdata[1])%>,
+				<%=Float.parseFloat(pmsdata[2])%>,
+				<%=Float.parseFloat(pmsdata[3])%>]
         }, {
         	name : '평균',
-			data : [<%=average%>,
-					<%=average%>,
-					<%=average%>,
-					<%=average%>]
+			data : [<%=Float.parseFloat(avg[0])%>,
+				<%=Float.parseFloat(avg[1])%>,
+				<%=Float.parseFloat(avg[2])%>,
+				<%=Float.parseFloat(avg[3])%>]
         }]
 
     });
@@ -250,3 +206,4 @@ try {
 
 
 </html>
+
