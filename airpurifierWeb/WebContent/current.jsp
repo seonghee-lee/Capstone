@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date" %>
+<%@ page import="java.util.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%
-	Date nowTime = new Date();
-	SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
-%>
+
 
 <html>
 <head>
@@ -66,7 +63,13 @@
 	String pmsdata0;
 	String pmsdata1;
 	String pmsdata2;
-	String pmsdata3;%>
+	String pmsdata3;
+	float average;
+	
+	String date0;
+	String date1;
+	String date2;
+	String date3;%>
 	
 <%
 request.setCharacterEncoding("utf-8");
@@ -84,48 +87,57 @@ Statement stmt4 = null;
 try {
 
 	//첫 번째 쿼리문 
-	String sql = "SELECT pmsdata FROM test_table where spot=1 ORDER BY id DESC LIMIT 1";
+	String sql = "SELECT pmsdata,date FROM test_table where spot=1 ORDER BY id DESC LIMIT 1";
 	stmt1 = conn.createStatement();
 	rs1 = stmt1.executeQuery(sql);
 
 	while (rs1.next()) {
 
 		pmsdata0 = rs1.getString("pmsdata");
+		date0 = rs1.getString("date");
+		date0 = date0.substring(0, 19);
 
 	}
 
 	//2 번째 쿼리문 
-	String sql2 = "SELECT pmsdata FROM test_table where spot=2 ORDER BY id DESC LIMIT 1";
+	String sql2 = "SELECT pmsdata,date FROM test_table where spot=2 ORDER BY id DESC LIMIT 1";
 	stmt2 = conn.createStatement();
 	rs2 = stmt2.executeQuery(sql2);
 
 	while (rs2.next()) {
 
 		pmsdata1 = rs2.getString("pmsdata");
-
+		date1 = rs2.getString("date");
+		date1 = date1.substring(0, 19);
 	}
 
 	//3 번째 쿼리문 
-	String sql3 = "SELECT pmsdata FROM test_table where spot=3 ORDER BY id DESC LIMIT 1";
+	String sql3 = "SELECT pmsdata,date FROM test_table where spot=3 ORDER BY id DESC LIMIT 1";
 	stmt3 = conn.createStatement();
 	rs3 = stmt3.executeQuery(sql3);
 
 	while (rs3.next()) {
 
 		pmsdata2 = rs3.getString("pmsdata");
+		date2 = rs3.getString("date");
+		date2 = date2.substring(0, 19);
 
 	}
 
 	//4 번째 쿼리문 
-	String sql4 = "SELECT pmsdata FROM test_table where spot=4 ORDER BY id DESC LIMIT 1";
+	String sql4 = "SELECT pmsdata,date FROM test_table where spot=4 ORDER BY id DESC LIMIT 1";
 	stmt4 = conn.createStatement();
 	rs4 = stmt4.executeQuery(sql4);
 
 	while (rs4.next()) {
 
 		pmsdata3 = rs4.getString("pmsdata");
+		date3 = rs4.getString("date");
+		date3 = date3.substring(0, 19);
 
 	}
+	
+	average = (Integer.parseInt(pmsdata0)+Integer.parseInt(pmsdata1)+Integer.parseInt(pmsdata2)+Integer.parseInt(pmsdata3))/4;
 
 } catch (SQLException ex) {
 	out.println("SQLException: " + ex.getMessage());
@@ -153,12 +165,13 @@ try {
 <figure class="highcharts-figure">
     <div id="container"></div>
     <p class ="chart-desc" style = "font-family: 'Noto Sans KR', sans-serif; text-align: center; ">
-    <%= sf.format(nowTime) %>
+
     <table id="datatable">
         <thead>
             <tr>
                 <th></th>
                 <th> 미세먼지 수치</th>
+                <th> 측정시간</th>
             
             </tr>
         </thead>
@@ -166,21 +179,25 @@ try {
             <tr>
                 <th>SPOT 0</th>
                 <td><%=pmsdata0%></td>
+                <td><%=date0%></td>
                 
             </tr>
             <tr>
                 <th>SPOT 1</th>
                 <td><%=pmsdata1%></td>
+                <td><%=date1%></td>
                 
             </tr>
             <tr>
                 <th>SPOT 2</th>
                 <td><%=pmsdata2%></td>
+                <td><%=date2%></td>
                 
             </tr>
             <tr>
                 <th>SPOT 3</th>
                 <td><%=pmsdata3%></td>
+                <td><%=date3%></td>
                 
             </tr>
         </tbody>
@@ -201,9 +218,9 @@ try {
             categories: ['SPOT 0','SPOT 1','SPOT 2','SPOT 3']
         },
         yAxis: {
-
+        	allowDecimals: false,
             title: {
-                text: '미세먼지 수치 '
+                text: ' ㎍/m³ '
             }
         },
         plotOptions: {
@@ -217,7 +234,13 @@ try {
 					<%=Float.parseFloat(pmsdata1)%>,
 					<%=Float.parseFloat(pmsdata2)%>,
 					<%=Float.parseFloat(pmsdata3)%>]
-		}]
+        }, {
+        	name : '평균',
+			data : [<%=average%>,
+					<%=average%>,
+					<%=average%>,
+					<%=average%>]
+        }]
 
     });
 
@@ -227,4 +250,3 @@ try {
 
 
 </html>
-
