@@ -180,10 +180,13 @@
             $('#searchStartDate').val(startDate);
                     
             // 종료일은 시작일 이전 날짜 선택하지 못하도록 비활성화
-            $("#searchEndDate").datepicker( "option", "minDate", startDate );
+            $("#searchEndDate").datepicker( "option", "minDate", true );
             
             // 시작일은 종료일 이후 날짜 선택하지 못하도록 비활성화
-            $("#searchStartDate").datepicker( "option", "maxDate", endDate );
+            $("#searchStartDate").datepicker( "option", "maxDate", true );
+            
+            $("#searchStartDate").datepicker('disable').removeAttr('disabled');
+            $("#searchEndDate").datepicker('disable').removeAttr('disabled');
 
         }
         
@@ -207,7 +210,7 @@
                 <tr>
                     <th>조회기간</th>
                     <td>
-                        <ul class="searchDate">
+                        <ul class="searchDate" >
                             
                             <li>
                                 <span class="chkbox2">
@@ -221,25 +224,21 @@
                                     <label for="dateType3">7일</label>
                                 </span>
                             </li>
-                            <li>
-                                <span class="chkbox2">
-                                    <input type="radio" name="dateType" id="dateType5" onclick="setSearchDate('30d')"/>
-                                    <label for="dateType5">30일</label>
-                                </span>
-                            </li>
+
                             
                         </ul>
                         
                         <div class="clearfix">
                             <!-- 시작일 -->
                             <span class="dset">
-                                <input type="text" class="datepicker inpType" name="searchStartDate" id="searchStartDate" >
+                                <input type="text" name="searchStartDate" id="searchStartDate" readonly>
                                 <a href="#none" class="btncalendar dateclick">달력</a>
                             </span>
                             <span class="demi">~</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <!-- 종료일 -->
                             <span class="dset">
-                                <input type="text" class="datepicker inpType" name="searchEndDate" id="searchEndDate" >
+                                <input type="text" name="searchEndDate" id="searchEndDate" disabled>
                                 <a href="#none" class="btncalendar dateclick">달력</a>
                             </span>
                         </div>                                     
@@ -321,14 +320,14 @@
 			
 
 			String Sstart_date = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+(cal.get(Calendar.DATE)-7);					
-    		String Send_date = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DATE);
+    		String Send_date = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+(cal.get(Calendar.DATE)+1);
 			
 //    		String Sstart_date="2021-09-04";
 //    		String Send_date="2021-09-11";
 								
 			try {
 					//spot0
-					String sql = "SELECT DATE(`date`) as date, avg(pmsdata) as avg0 FROM test_table WHERE spot=0 and date BETWEEN '" +Sstart_date+ "' AND '"+Send_date+"' GROUP BY DATE(`date`), spot";
+					String sql = "SELECT DATE(`date`) as date, avg(pmsdata) as avg0 FROM test_table WHERE spot=0 and date BETWEEN '"+Sstart_date+"' AND '"+Send_date+"' GROUP BY DATE(`date`), spot";
 					stmt1 = conn.createStatement();
 					rs1 = stmt1.executeQuery(sql);
 				
@@ -336,7 +335,9 @@
 					for(int i=0; rs1.next(); i++){
 						date0[i] = rs1.getString(1);
 						avg0[i] = rs1.getString(2);
-						String utc = date0[i].substring(0,4)+", "+date0[i].substring(5,7)+", "+date0[i].substring(8,10);
+					 	int Month = Integer.parseInt(date0[i].substring(5,7))-1;
+					 	String SMonth = Integer.toString(Month);
+						String utc = date0[i].substring(0,4)+", "+SMonth+", "+date0[i].substring(8,10);
 						utc0[i] = "Date.UTC("+utc+")";
 					}	
 					
@@ -349,7 +350,9 @@
 					for(int i=0; rs2.next(); i++){
 						date1[i] = rs2.getString(1);
 						avg1[i] = rs2.getString(2);
-						String utc = date1[i].substring(0,4)+", "+date1[i].substring(5,7)+", "+date1[i].substring(8,10);
+					 	int Month = Integer.parseInt(date1[i].substring(5,7))-1;
+					 	String SMonth = Integer.toString(Month);
+						String utc = date1[i].substring(0,4)+", "+SMonth+", "+date1[i].substring(8,10);
 						utc1[i] = "Date.UTC("+utc+")";
 					}
 					
@@ -362,7 +365,9 @@
 					for(int i=0; rs3.next(); i++){
 						date2[i] = rs3.getString(1);
 						avg2[i] = rs3.getString(2);
-						String utc = date2[i].substring(0,4)+", "+date2[i].substring(5,7)+", "+date2[i].substring(8,10);
+					 	int Month = Integer.parseInt(date2[i].substring(5,7))-1;
+					 	String SMonth = Integer.toString(Month);
+						String utc = date2[i].substring(0,4)+", "+SMonth+", "+date2[i].substring(8,10);
 						utc2[i] = "Date.UTC("+utc+")";
 					}
 					
@@ -374,12 +379,14 @@
 					for(int i=0; rs4.next(); i++){
 						date3[i] = rs4.getString(1);
 						avg3[i] = rs4.getString(2);
-						String utc = date3[i].substring(0,4)+", "+date3[i].substring(5,7)+", "+date3[i].substring(8,10);
+					 	int Month = Integer.parseInt(date3[i].substring(5,7))-1;
+					 	String SMonth = Integer.toString(Month);
+						String utc = date3[i].substring(0,4)+", "+SMonth+", "+date3[i].substring(8,10);
 						utc3[i] = "Date.UTC("+utc+")";
+						
+						
 					}
-					
-					
-					
+	
 								
 				}catch (SQLException ex) {
 					out.println("SQLException: " + ex.getMessage());
@@ -407,7 +414,7 @@
 		    			type: 'datetime',
 		    			dateTimeLabelFormats: { // don't display the dummy year
 		    				month: '%e. %b',
-		    				year: '%b'
+		    				year: '%Y.'
 		    			},
 		    			title: {
 		    				text: 'Date'
@@ -435,40 +442,40 @@
 		    			   	name: 'SPOT 0',
 		    			    data: [
 					    			               	  
-			    			    	[<%=utc0[0]%>, <%=Float.parseFloat(avg0[0])%>],
-				    			    [<%=utc0[1]%>, <%=Float.parseFloat(avg0[1])%>],
-				    			    [<%=utc0[2]%>, <%=Float.parseFloat(avg0[2])%>],
-				    			    [<%=utc0[3]%>, <%=Float.parseFloat(avg0[3])%>]
+			    			    	[<%=utc0[4]%>, <%=Float.parseFloat(avg0[4])%>],
+				    			    [<%=utc0[5]%>, <%=Float.parseFloat(avg0[5])%>],
+				    			    [<%=utc0[6]%>, <%=Float.parseFloat(avg0[6])%>],
+				    			    [<%=utc0[7]%>, <%=Float.parseFloat(avg0[7])%>]
 		    			    ]
 		    			},
 		    		 	{
 		    			   	name: 'SPOT 1',
 		    			    data: [
 					    			               	  
-			    			    	[<%=utc1[0]%>, <%=Float.parseFloat(avg1[0])%>],
-				    			    [<%=utc1[1]%>, <%=Float.parseFloat(avg1[1])%>],
-				    			    [<%=utc1[2]%>, <%=Float.parseFloat(avg1[2])%>],
-				    			    [<%=utc1[3]%>, <%=Float.parseFloat(avg1[3])%>]
+			    			    	[<%=utc1[4]%>, <%=Float.parseFloat(avg1[4])%>],
+				    			    [<%=utc1[5]%>, <%=Float.parseFloat(avg1[5])%>],
+				    			    [<%=utc1[6]%>, <%=Float.parseFloat(avg1[6])%>],
+				    			    [<%=utc1[7]%>, <%=Float.parseFloat(avg1[7])%>]
 		    			    ]
 		    			},
 		    		 	{
 		    			   	name: 'SPOT 2',
 		    			    data: [
 					    			               	  
-			    			    	[<%=utc2[0]%>, <%=Float.parseFloat(avg2[0])%>],
-				    			    [<%=utc2[1]%>, <%=Float.parseFloat(avg2[1])%>],
-				    			    [<%=utc2[2]%>, <%=Float.parseFloat(avg2[2])%>],
-				    			    [<%=utc2[3]%>, <%=Float.parseFloat(avg2[3])%>]
+			    			    	[<%=utc2[4]%>, <%=Float.parseFloat(avg2[4])%>],
+				    			    [<%=utc2[5]%>, <%=Float.parseFloat(avg2[5])%>],
+				    			    [<%=utc2[6]%>, <%=Float.parseFloat(avg2[6])%>],
+				    			    [<%=utc2[7]%>, <%=Float.parseFloat(avg2[7])%>]
 		    			    ]
 		    			},
 		    		 	{
 		    			   	name: 'SPOT 3',
 		    			    data: [
 		    			    	
-			    			    	[<%=utc3[0]%>, <%=Float.parseFloat(avg3[0])%>],
-				    			    [<%=utc3[1]%>, <%=Float.parseFloat(avg3[1])%>],
-				    			    [<%=utc3[2]%>, <%=Float.parseFloat(avg3[2])%>],
-				    			    [<%=utc3[3]%>, <%=Float.parseFloat(avg3[3])%>]
+			    			    	[<%=utc3[4]%>, <%=Float.parseFloat(avg3[4])%>],
+				    			    [<%=utc3[5]%>, <%=Float.parseFloat(avg3[5])%>],
+				    			    [<%=utc3[6]%>, <%=Float.parseFloat(avg3[6])%>],
+				    			    [<%=utc3[7]%>, <%=Float.parseFloat(avg3[7])%>]
 		    			    ]
 		    			}
 		    			
@@ -483,7 +490,13 @@
 		    		json.yAxis = yAxis;  
 		    		json.series = series;
 		    		json.plotOptions = plotOptions;
+		    		
 		    		$('#container').highcharts(json);
+		    		$('#container').setOptions({
+		    			global: {
+		    				useUTC: false
+		    			}
+		    		});
 		    		
 		    		
 		    	}); 
