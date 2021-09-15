@@ -228,7 +228,7 @@ int main(int argc, char** argv) { // 노드 메인 함수
 
 			////////////////////////////////////database////////////////////////////////////
 			connection = mysql_init(connection);
-			mysql_real_connect(connection, NULL, "newhj", "shj4197", "testdb", 0, NULL, 0);
+			mysql_real_connect(connection, NULL, "[id]", "[passwd]", "[dbname]", 0, NULL, 0);
 			if (mysql_query(connection, "SELECT * FROM test_table")) {
 				ROS_INFO("Query Error: %s", mysql_error(connection));
 				exit(1);
