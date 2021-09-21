@@ -195,8 +195,8 @@ int main(int argc, char** argv) { // 노드 메인 함수
 	Navigation navigation;
 	Subscriber subscriber(nh);
 	//배터리 스팟
-	double last_spotx = 1.27526913959;
-	double last_spoty = 0.205639101263;
+	double last_spotx = -0.9642;
+	double last_spoty = 0.9634;
 
 	while (true) {
 		ros::spinOnce();
